@@ -19,10 +19,11 @@ app.post('/start', async function (req, res) {
     // TODO 4. start publisher express with exec() and set port by findPort()...
     // TODO 5. set nginx to handle apis from /api/... to publisher express app 
 
-    let {publisherId} = req.body;
+    let {publisherId, publisherDomain, sudoPassword} = req.body;
 
     let expressPath = process.env.SOURCE_PUBLISHER_EXPRESS_APP;
     let clientPath = process.env.SOURCE_PUBLISHER_CLIENT;
+    let nginxConfPath = process.env.SOURCE_NGINX_CONF;
     let basePath = process.env.PUBLISHER_EXPRESS_APP_BASE_PATH;
     let path = `${basePath}/${publisherId}`;
 
@@ -34,9 +35,9 @@ app.post('/start', async function (req, res) {
         if (!await fsPromises.exists(path)) {
             await fsPromises.mkdir(path);
         }
-        
+
+        /// Express Configs
         await ncpAsync(expressPath, path);
-        await ncpAsync(clientPath, path);
 
         let freePort = await getPort({port: getPort.makeRange(4000, 4999)});
 
@@ -55,7 +56,7 @@ app.post('/start', async function (req, res) {
             cwd: path
         });
         
-        if (status == 0) {
+        if (status !== 0) {
             throw new Error ('Installing failed !!!');
         }
 
@@ -64,9 +65,35 @@ app.post('/start', async function (req, res) {
             cwd: path
         });
         
-        if (startResult.status == 0) {
+        if (startResult.status !== 0) {
             throw new Error ('Running failed !!!');
         }
+        /// Express Configs
+
+        /// Client Configs
+        await ncpAsync(clientPath, path);
+
+        // TODO change client configs
+        /// Client Configs
+
+        /// NginX Configs
+        let data = await fsPromises.readFile(nginxConfPath, 'utf8');
+        let newNginxData = data
+            .replace(/{publisherId}/g, `Publisher_${publisherId}`)
+            .replace(/{serverName}/g, publisherDomain);
+
+        let nginxSitesPath = `${nginxSitesPath}/${publisherDomain}.conf`;
+
+        fsPromises.writeFile(nginxSitesPath, newNginxData, 'utf8');
+        
+        command = `echo ${sudoPassword} | sudo -S nginx reload`;
+
+        let nginxResult = await execP(command);
+        
+        if (nginxResult.status !== 0) {
+            throw new Error ('Nginx error !!!');
+        }
+        /// NginX Configs
 
         res.status(404).json(
             new Response(true, {dataJsonPath: `${path}/public/data.json`}).json()
