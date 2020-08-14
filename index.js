@@ -22,6 +22,7 @@ app.post('/start', async function (req, res) {
     let {publisherId} = req.body;
 
     let expressPath = process.env.SOURCE_PUBLISHER_EXPRESS_APP;
+    let clientPath = process.env.SOURCE_PUBLISHER_CLIENT;
     let basePath = process.env.PUBLISHER_EXPRESS_APP_BASE_PATH;
     let path = `${basePath}/${publisherId}`;
 
@@ -35,6 +36,7 @@ app.post('/start', async function (req, res) {
         }
         
         await ncpAsync(expressPath, path);
+        await ncpAsync(clientPath, path);
 
         let freePort = await getPort({port: getPort.makeRange(4000, 4999)});
 
