@@ -11,7 +11,7 @@ let Response = require('./utils/response.js');
 let express = require('express');
 let app = express();
 
-router.post('/start', async function (req, res) {
+app.post('/start', async function (req, res) {
     // TODO start a publisher server
     // TODO 1. copy base weblancer landing page & publisher express to an appropriate folder
     // TODO 2. change configration files like style.css, index.html, webhookUrls, ...
@@ -77,24 +77,24 @@ router.post('/start', async function (req, res) {
     } 
 })
 
-router.post('/stop', function (req, res) {
+app.post('/stop', function (req, res) {
     // TODO stop a publisher server
     // TODO 1. set nginx to return custom html file for publisher server
 })
 
-router.post('/remove', function (req, res) {
+app.post('/remove', function (req, res) {
     // TODO remove a publisher server
 })
 
-router.post('/setdomain', function (req, res) {
+app.post('/setdomain', function (req, res) {
     // TODO set domain for exist publisher server
 })
 
-router.post('/removedomain', function (req, res) {
+app.post('/removedomain', function (req, res) {
     // TODO remove domain for exist publisher server
 })
 
-router.get('/resourceusage', function (req, res) {
+app.get('/resourceusage', function (req, res) {
     // TODO return resource useage
 })
  
