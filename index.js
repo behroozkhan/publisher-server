@@ -1,5 +1,6 @@
 require('dotenv').config();
 const fsPromises = require('fs').promises;
+var Promise = require("bluebird");
 let ncpAsync = Promise.promisify(require('ncp').ncp);
 let crypto = require('crypto');
 let exec = require('child_process').exec;
