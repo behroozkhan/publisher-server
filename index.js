@@ -27,7 +27,7 @@ app.post('/start', async function (req, res) {
     let basePath = process.env.PUBLISHER_EXPRESS_APP_BASE_PATH;
     let path = `${basePath}/${publisherId}`;
 
-    let dotEnvPath = `${basePath}/${process.env.EXPRESS_DOTENV_PATH}`;
+    let dotEnvExpressPath = `${basePath}/${process.env.EXPRESS_DOTENV_RELATIVE_PATH}`;
 
     let nginxSitesPath = process.env.NGINX_SITES_PATH;
 
@@ -41,15 +41,15 @@ app.post('/start', async function (req, res) {
 
         let freePort = await getPort({port: getPort.makeRange(4000, 4999)});
 
-        let data = await fsPromises.readFile(dotEnvPath, 'utf8');
-        let newDotEnv = data
+        let data = await fsPromises.readFile(dotEnvExpressPath, 'utf8');
+        data = data
             .replace(/{publisher_publisherId}/g, `PublisherDB_${publisherId}`)
             .replace(/{postgres_username}/g, process.env.POSTGRES_USER)
             .replace(/{postgres_password}/g, process.env.POSTGRES_PASSWORD)
             .replace(/{jwt_access_token_secret}/g, crypto.randomBytes(64).toString('hex'))
             .replace(/{port}/g, freePort);
 
-        fsPromises.writeFile(dotEnvPath, newDotEnv, 'utf8');
+        fsPromises.writeFile(data, newDotEnv, 'utf8');
 
         let command = 'npm install';
         let { status, stdout, stderr } = await execP(command, {
@@ -78,13 +78,13 @@ app.post('/start', async function (req, res) {
 
         /// NginX Configs
         let data = await fsPromises.readFile(nginxConfPath, 'utf8');
-        let newNginxData = data
+        data = data
             .replace(/{publisherId}/g, `Publisher_${publisherId}`)
             .replace(/{serverName}/g, publisherDomain);
 
-        let nginxSitesPath = `${nginxSitesPath}/${publisherDomain}.conf`;
+        nginxSitesPath = `${nginxSitesPath}/${publisherDomain}.conf`;
 
-        fsPromises.writeFile(nginxSitesPath, newNginxData, 'utf8');
+        fsPromises.writeFile(nginxSitesPath, data, 'utf8');
         
         command = `echo ${sudoPassword} | sudo -S nginx reload`;
 
