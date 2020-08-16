@@ -1,6 +1,6 @@
-import { getConfig } from "../models/config";
+let { getConfig } = require("../model-manager/models.js");
 
-export function unlessRoute (path, middleware) {
+module.exports.unlessRoute = function unlessRoute (path, middleware) {
     return function(req, res, next) {
         if (path.includes(req.baseUrl)) {
             return next();
@@ -10,13 +10,13 @@ export function unlessRoute (path, middleware) {
     };
 };
 
-export function getRandomInt(min, max) {
+module.exports.getRandomInt = function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-export function makeResNum(length) {
+module.exports.makeResNum = function makeResNum(length) {
     var result           = '';
     var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     var charactersLength = characters.length;
@@ -26,12 +26,12 @@ export function makeResNum(length) {
     return result;
 }
 
-export let makeResNumByUser = async (user) => {
+module.exports.makeResNumByUser = async (user) => {
     let publisherId = await getConfig('PublisherId');
     return `Tr_${publisherId}_U_${user.id}_${user.credit}_${user.creditTransactions.length}`;
 }
 
-export let makeResNumByWebsite = async (website, planId) => {
+module.exports.makeResNumByWebsite = async (website, planId) => {
     let publisherId = await getConfig('PublisherId');
     return `Tr_${publisherId}_WP_${website.id}_${website.websitePlans.length}_${planId}`;
 }

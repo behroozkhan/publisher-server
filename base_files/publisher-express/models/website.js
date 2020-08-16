@@ -1,5 +1,5 @@
 const Website = (sequelize, DataTypes) => {
-    const Website = sequelize.define('Website', {
+    const Website = sequelize.define('website', {
         id: {
             type: DataTypes.BIGINT,
             unique: true,
@@ -30,4 +30,4 @@ const Website = (sequelize, DataTypes) => {
     return Website;
 };
 
-export default Website;
+module.exports = Website;

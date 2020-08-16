@@ -1,5 +1,5 @@
 const CreditTransaction = (sequelize, DataTypes) => {
-    const CreditTransaction = sequelize.define('CreditTransaction', {
+    const CreditTransaction = sequelize.define('credit_transaction', {
         id: {
             type: DataTypes.BIGINT,
             unique: true,
@@ -24,4 +24,4 @@ const CreditTransaction = (sequelize, DataTypes) => {
     return CreditTransaction;
 };
 
-export default CreditTransaction;
+module.exports = CreditTransaction;

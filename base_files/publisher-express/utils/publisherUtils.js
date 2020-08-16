@@ -1,4 +1,4 @@
-import { getConfig } from "../models/config";
+let { getConfig } = require("../models/config");
 
 let PublisherUtils;
 
@@ -62,4 +62,9 @@ PublisherUtils.createOrUpgradeWebsiteInWeblancer = async (endUserId, endWebsiteI
     });
 }
 
-export default PublisherUtils;
+PublisherUtils.checkOwnerShip = (req, res, next) => {
+    let serviceId = req.param.id;
+    // if user has service id => next(), else => reject()
+}
+
+module.exports = PublisherUtils;

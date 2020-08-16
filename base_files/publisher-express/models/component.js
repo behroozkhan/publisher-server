@@ -1,5 +1,5 @@
 const Component = (sequelize, DataTypes) => {
-    const Component = sequelize.define('Component', {
+    const Component = sequelize.define('component', {
         id: {
             type: DataTypes.BIGINT,
             unique: true,
@@ -24,4 +24,4 @@ const Component = (sequelize, DataTypes) => {
     return Component;
 };
 
-export default Component;
+module.exports = Component;

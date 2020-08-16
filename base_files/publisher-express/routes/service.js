@@ -1,5 +1,6 @@
-var express = require('express');
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
+let checkOwnerShip = require('../utils/publisherUtils.js').checkOwnerShip;
 
 router.get('/', function (req, res) {
     // return all user services
@@ -32,10 +33,5 @@ router.put('/stop/:id', checkOwnerShip, function (req, res) {
 router.put('/acl/:id', checkOwnerShip, function (req, res) {
     // change access controll of service
 })
-
-export function checkOwnerShip(req, res, next) {
-    let serviceId = req.param.id;
-    // if user has service id => next(), else => reject()
-}
 
 module.exports = router;

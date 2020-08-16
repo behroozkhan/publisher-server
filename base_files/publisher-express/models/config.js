@@ -1,7 +1,5 @@
-import models from './models';
-
 const Config = (sequelize, DataTypes) => {
-    const Config = sequelize.define('Config', {
+    const Config = sequelize.define('config', {
         id: {
             type: DataTypes.INTEGER,
             unique: true,
@@ -20,15 +18,4 @@ const Config = (sequelize, DataTypes) => {
     return Config;
 };
 
-export async function getConfig (key) {
-    try {
-        return await models.Config.find({
-            where: {
-                key: key
-            }
-        });
-    } catch {
-    }
-}
-
-export default Config;
+module.exports = Config;

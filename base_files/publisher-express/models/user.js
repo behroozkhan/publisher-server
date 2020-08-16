@@ -1,5 +1,5 @@
 const User = (sequelize, DataTypes) => {
-    const User = sequelize.define('User', {
+    const User = sequelize.define('user', {
         id: {
             type: DataTypes.BIGINT,
             unique: true,
@@ -44,7 +44,15 @@ const User = (sequelize, DataTypes) => {
         }
     });
      
+    User.associate = function(models) {
+        models.user.hasMany(models.website);
+        models.user.hasMany(models.app);
+        models.user.hasMany(models.service);
+        models.user.hasMany(models.component);
+        models.user.hasMany(models.credit_transaction);
+    };
+
     return User;
 };
 
-export default User;
+module.exports = User;

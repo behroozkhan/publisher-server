@@ -1,14 +1,13 @@
-import {makeResNumByUser, makeResNumByPlanId} from '../utils/utils';
-import { getConfig } from '../models/config';
-import Response from '../utils/response';
-import {sequelize} from '../models/models';
-import PublisherUtils from '../utils/publisherUtils';
+let {makeResNumByUser, makeResNumByPlanId} = require('../utils/utils.js');
+let { getConfig } = require("../models/config.js");
+let Response = require('../utils/response');
+let {sequelize} = require('../model-manager/models');
+let PublisherUtils = require('../utils/publisherUtils');
 
 let express = require('express');
 let router = express.Router();
 let models = require('models');
 let jwt = require('jsonwebtoken');
-let moment = require('moment');
 
 const axios = require('axios');
 

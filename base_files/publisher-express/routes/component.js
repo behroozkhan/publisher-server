@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+let checkOwnerShip = require('../utils/publisherUtils.js').checkOwnerShip;
 
 router.get('/', function (req, res) {
     // return all user components
@@ -24,10 +25,5 @@ router.delete('/:id', checkOwnerShip, function (req, res) {
 router.put('/acl/:id', checkOwnerShip, function (req, res) {
     // change access controll of component
 })
-
-export function checkOwnerShip(req, res, next) {
-    let componentId = req.param.id;
-    // if user has component id => next(), else => reject()
-}
 
 module.exports = router;

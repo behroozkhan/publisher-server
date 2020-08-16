@@ -1,4 +1,4 @@
-import Sequelize from 'sequelize';
+let Sequelize = require('sequelize');
  
 const sequelize = new Sequelize(
     process.env.DATABASE,
@@ -21,14 +21,6 @@ const models = {
     Config: sequelize.import('./config.js'),
     CreditTransaction: sequelize.import('./credit-transaction.js'),
 };
-
-models.Website.hasOne(models.WebsitePlan);
-models.WebsitePlan.hasOne(models.Plan);
-models.User.hasMany(models.Website);
-models.User.hasMany(models.App);
-models.User.hasMany(models.Service);
-models.User.hasMany(models.Component);
-models.User.hasMany(models.CreditTransaction);
 
 let findAndCountAll = (req, res, model) => {
     let pageNumber = req.query.pageNumber || 1;
@@ -55,7 +47,16 @@ let findAndCountAll = (req, res, model) => {
     });
 }
 
-export { sequelize };
-export { findAndCountAll };
-
-export default models;
+module.exports.models = models;
+module.exports.sequelize = sequelize;
+module.exports.findAndCountAll = findAndCountAll;
+module.exports.getConfig = async function getConfig (key) {
+    try {
+        return await models.Config.findOne({
+            where: {
+                key: key
+            }
+        });
+    } catch (e) {
+    }
+}

@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+let checkOwnerShip = require('../utils/publisherUtils.js').checkOwnerShip;
 
 router.get('/', function (req, res) {
     // return all user apps
@@ -24,10 +25,5 @@ router.delete('/:id', checkOwnerShip, function (req, res) {
 router.put('/acl/:id', checkOwnerShip, function (req, res) {
     // change access controll of app
 })
-
-export function checkOwnerShip(req, res, next) {
-    let appId = req.param.id;
-    // if user has app id => next(), else => reject()
-}
 
 module.exports = router;

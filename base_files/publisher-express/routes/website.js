@@ -1,5 +1,5 @@
 import Response from '../utils/response';
-import {sequelize, findAndCountAll} from '../models/models';
+import {sequelize, findAndCountAll} from '../model-manager/models';
 import PublisherUtils from '../utils/publisherUtils';
 
 let express = require('express');

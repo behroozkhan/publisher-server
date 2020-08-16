@@ -1,5 +1,5 @@
 const App = (sequelize, DataTypes) => {
-    const App = sequelize.define('App', {
+    const App = sequelize.define('app', {
         id: {
             type: DataTypes.BIGINT,
             unique: true,

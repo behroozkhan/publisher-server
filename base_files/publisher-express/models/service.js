@@ -1,5 +1,5 @@
 const Service = (sequelize, DataTypes) => {
-    const Service = sequelize.define('Service', {
+    const Service = sequelize.define('service', {
         id: {
             type: DataTypes.BIGINT,
             unique: true,
@@ -27,4 +27,4 @@ const Service = (sequelize, DataTypes) => {
     return Service;
 };
 
-export default Service;
+module.exports = Service;

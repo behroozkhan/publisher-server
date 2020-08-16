@@ -1,5 +1,5 @@
 const Plan = (sequelize, DataTypes) => {
-    const Plan = sequelize.define('Plan', {
+    const Plan = sequelize.define('plan', {
         id: {
             type: DataTypes.INTEGER,
             unique: true,
@@ -48,4 +48,4 @@ const Plan = (sequelize, DataTypes) => {
     return Plan;
 };
 
-export default Plan;
+module.exports = Plan;

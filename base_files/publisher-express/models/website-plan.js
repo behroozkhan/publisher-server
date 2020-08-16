@@ -1,5 +1,5 @@
 const WebsitePlan = (sequelize, DataTypes) => {
-    const WebsitePlan = sequelize.define('WebsitePlan', {
+    const WebsitePlan = sequelize.define('website_plan', {
         id: {
             type: DataTypes.BIGINT,
             unique: true,
@@ -26,7 +26,12 @@ const WebsitePlan = (sequelize, DataTypes) => {
         },
     });
      
+    WebsitePlan.associate = function(models) {
+        models.website.hasOne(models.website_plan);
+        models.website_plan.hasOne(models.plan);
+    };
+
     return WebsitePlan;
 };
 
-export default WebsitePlan;
+module.exports = WebsitePlan;
