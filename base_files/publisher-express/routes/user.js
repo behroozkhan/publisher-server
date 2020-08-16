@@ -68,7 +68,7 @@ router.post('/', function (req, res) {
     });
 })
 
-router.put('/',async function (req, res) {
+router.put('/:id',async function (req, res) {
     // update user
     let id = req.params.id;
     let user;

@@ -30,6 +30,9 @@ PublisherUtils.isUserNameUnique = (username) => {
 }
 
 PublisherUtils.isSubDomainUnique = (subDomain) => {
+    if (!subDomain)
+        return true;
+    
     return models.Website.count({ where: { subDomain: subDomain } })
       .then(count => {
         if (count != 0) {
