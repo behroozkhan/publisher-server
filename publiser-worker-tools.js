@@ -141,7 +141,7 @@ let start = async (req, res) => {
         let installClientResult = await execShellCommand(command, {
             cwd: newClientProjectPath
         });
-        
+         
         if (!installClientResult.success) {
             throw new Error ('Installing client failed !!!');
         }
