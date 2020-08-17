@@ -19,6 +19,7 @@ let Response = require('./utils/response.js');
 let express = require('express');
 const { start, update } = require('./publiser-worker-tools.js');
 let app = express();
+app.use(express.json());
 const appBaseRoute = '/worker';
 
 app.post(appBaseRoute + '/start', async function (req, res) {
