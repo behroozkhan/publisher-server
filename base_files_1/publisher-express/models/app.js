@@ -27,4 +27,4 @@ const App = (sequelize, DataTypes) => {
     return App;
 };
 
-export default App;
+module.exports = App;

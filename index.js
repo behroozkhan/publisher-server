@@ -22,10 +22,10 @@ let {initServerNginxConfig} = require('./serverInit.js');
 /// Configing publisher server nginx for browse publisher clients and call their apis
 
 let express = require('express');
-const { domain } = require('process');
 let app = express();
+const appBaseRoute = '/worker';
 
-app.post('/start', async function (req, res) {
+app.post(appBaseRoute + '/start', async function (req, res) {
     // TODO start a publisher server
     // TODO 1. copy base weblancer landing page & publisher express to an appropriate folder
     // TODO 2. change configration files like style.css, index.html, webhookUrls, ...
@@ -34,11 +34,12 @@ app.post('/start', async function (req, res) {
     // TODO 5. set nginx to handle apis from /api/... to publisher express app 
 
     let {publisherId, publisherDomains, sudoPassword, postgresHost,
-        hasPrivateDomain, publisherBrandName} = req.body;
+        hasPrivateDomain, publisherBrandName, publisherVersion} = req.body;
 
-    let expressPath = __dirname + process.env.SOURCE_PUBLISHER_EXPRESS_APP;
-    let clientPath = __dirname + process.env.SOURCE_PUBLISHER_CLIENT;
-    let nginxConfPath = __dirname + process.env.SOURCE_NGINX_CONF;
+    let baseFilePath = `/base_file_${publisherVersion}`;
+    let expressPath = __dirname + baseFilePath + process.env.SOURCE_PUBLISHER_EXPRESS_APP;
+    let clientPath = __dirname + baseFilePath + process.env.SOURCE_PUBLISHER_CLIENT;
+    let nginxConfPath = __dirname + baseFilePath + process.env.SOURCE_NGINX_CONF;
     let basePath = process.env.PUBLISHER_EXPRESS_APP_BASE_PATH;
     let path = `${basePath}/${publisherId}`;
 
@@ -173,24 +174,30 @@ app.post('/start', async function (req, res) {
     } 
 })
 
-app.post('/stop', function (req, res) {
+app.post(appBaseRoute + '/stop', function (req, res) {
     // TODO stop a publisher server
     // TODO 1. set nginx to return custom html file for publisher server
 })
 
-app.post('/remove', function (req, res) {
+app.post(appBaseRoute + '/update', function (req, res) {
+    // TODO update a publisher express and database
+    // TODO 1. pull publisher server from git
+    // TODO
+})
+
+app.post(appBaseRoute + '/remove', function (req, res) {
     // TODO remove a publisher server
 })
 
-app.post('/setdomain', function (req, res) {
+app.post(appBaseRoute + '/setdomain', function (req, res) {
     // TODO set domain for exist publisher server
 })
 
-app.post('/removedomain', function (req, res) {
+app.post(appBaseRoute + '/removedomain', function (req, res) {
     // TODO remove domain for exist publisher server
 })
 
-app.get('/resourceusage', function (req, res) {
+app.get(appBaseRoute + '/resourceusage', function (req, res) {
     // TODO return resource useage
 })
 
