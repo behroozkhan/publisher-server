@@ -59,7 +59,7 @@ let start = async (req, res) => {
     let newClientBuildPath = `${path}/build`;
 
     let dotEnvExpressPath = `${newExpressPath}/.env`;
-    let clientConfigPath = `${newClientProjectPath}/src/Config/test`;
+    let clientConfigPath = `${newClientProjectPath}/src/Config/config.json`;
 
     let nginxSitesPath = process.env.NGINX_SITES_PATH;
 
@@ -117,9 +117,7 @@ let start = async (req, res) => {
         console.log("Client configs ...");
         await ncpAsync(clientPath, newClientProjectPath);
 
-        console.log("Check", fs.existsSync(clientConfigPath), clientConfigPath)
         data = await fsPromises.readFile(clientConfigPath, 'utf8');
-        console.log("Check2", fs.existsSync(clientConfigPath), clientConfigPath)
         let baseApiUrl = `${
             !hasPrivateDomain ? 'publisherapi.' + process.env.PUBLISHER_DOMAIN + 
             '/api/' + freePort:
