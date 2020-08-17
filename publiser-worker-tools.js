@@ -17,6 +17,14 @@ function existsAsync(path) {
   })
 }
 
+function waitForMilis(milis) {
+    return new Promise(function(resolve, reject){
+        setTimeout(() => {
+            resolve();
+        }, milis);
+    })
+}
+
 function execShellCommand(cmd, config) {
     return new Promise((resolve, reject) => {
         exec(cmd, config, (error, stdout, stderr) => {
@@ -73,6 +81,7 @@ let start = async (req, res) => {
         /// Express Configs
         console.log("Express Configs ...");
         await ncpAsync(expressPath, newExpressPath);
+        await waitForMilis(1000);
 
         let freePort = await getPort({port: getPort.makeRange(4000, 4999)});
 
@@ -121,6 +130,7 @@ let start = async (req, res) => {
         /// Client Configs
         console.log("Client configs ...");
         await ncpAsync(clientPath, newClientProjectPath);
+        await waitForMilis(1000);
 
         data = await fsPromises.readFile(clientConfigPath, 'utf8');
         let baseApiUrl = `${
@@ -162,6 +172,7 @@ let start = async (req, res) => {
 
         console.log("Client configs copying builded files...");
         await ncpAsync(clientGeneratedBuildPath, newClientBuildPath);
+        await waitForMilis(1000);
         await fsPromises.rename(`${path}/build`, `${path}/client`)
         /// Client Configs
 
