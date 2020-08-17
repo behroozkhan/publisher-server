@@ -98,7 +98,7 @@ let start = async (req, res) => {
         });
         
         if (!installResult.success) {
-            console.log("Error: ", installResult);
+            console.log("Error: ", installResult.error);
             throw new Error ('Installing failed !!!');
         }
 
@@ -110,7 +110,7 @@ let start = async (req, res) => {
         });
         
         if (!startResult.success) {
-            console.log("Error: ", startResult);
+            console.log("Error: ", startResult.error);
             throw new Error ('Running failed !!!');
         }
         /// Express Configs
@@ -141,7 +141,7 @@ let start = async (req, res) => {
         });
          
         if (!installClientResult.success) {
-            console.log("Error: ", installClientResult);
+            console.log("Error: ", installClientResult.error);
             throw new Error ('Installing client failed !!!');
         }
 
@@ -152,7 +152,7 @@ let start = async (req, res) => {
         });
         
         if (!buildResult.success) {
-            console.log("Error: ", buildResult);
+            console.log("Error: ", buildResult.error);
             throw new Error ('Building client failed !!!');
         }
 
@@ -199,7 +199,7 @@ let start = async (req, res) => {
         })
 
         if (!initDbResult.success) {
-            console.log("Error: ", initDbResult);
+            console.log("Error: ", initDbResult.error);
             throw new Error ('Database init failed !!!');
         }
         /// Database Configs
