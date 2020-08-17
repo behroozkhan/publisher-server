@@ -98,6 +98,7 @@ let start = async (req, res) => {
         });
         
         if (!installResult.success) {
+            console.log("Error: ", installResult);
             throw new Error ('Installing failed !!!');
         }
 
@@ -109,6 +110,7 @@ let start = async (req, res) => {
         });
         
         if (!startResult.success) {
+            console.log("Error: ", startResult);
             throw new Error ('Running failed !!!');
         }
         /// Express Configs
@@ -117,9 +119,7 @@ let start = async (req, res) => {
         console.log("Client configs ...");
         await ncpAsync(clientPath, newClientProjectPath);
 
-        console.log("Check", fs.existsSync(clientConfigPath), clientConfigPath)
         data = await fsPromises.readFile(clientConfigPath, 'utf8');
-        console.log("Check2", fs.existsSync(clientConfigPath), clientConfigPath)
         let baseApiUrl = `${
             !hasPrivateDomain ? 'publisherapi.' + process.env.PUBLISHER_DOMAIN + 
             '/api/' + freePort:
@@ -131,10 +131,8 @@ let start = async (req, res) => {
             .replace(/{ServerUrl}/g, baseApiUrl)
             .replace(/{BrandName}/g, publisherBrandName);
 
-        console.log("Check3", data)
         clientConfigPath += '.json';
         await fsPromises.writeFile(clientConfigPath, data, 'utf8');
-        console.log("Check4", data)
         
         console.log("Client configs npm install ...");
         command = 'npm install';
@@ -143,6 +141,7 @@ let start = async (req, res) => {
         });
          
         if (!installClientResult.success) {
+            console.log("Error: ", installClientResult);
             throw new Error ('Installing client failed !!!');
         }
 
@@ -153,6 +152,7 @@ let start = async (req, res) => {
         });
         
         if (!buildResult.success) {
+            console.log("Error: ", buildResult);
             throw new Error ('Building client failed !!!');
         }
 
@@ -199,6 +199,7 @@ let start = async (req, res) => {
         })
 
         if (!initDbResult.success) {
+            console.log("Error: ", initDbResult);
             throw new Error ('Database init failed !!!');
         }
         /// Database Configs
