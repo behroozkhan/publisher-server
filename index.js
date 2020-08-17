@@ -1,15 +1,18 @@
 require('dotenv').config();
-let {initServerNginxConfig} = require('./serverInit.js');
 
 /// Configing publisher server nginx for browse publisher clients and call their apis
-(async () => {
-    let result = await initServerNginxConfig(process.env.PUBLISHER_DOMAIN);
+// TODO uncomment lines below to initial a publisher server if nginx not configed before
+// let {initServerNginxConfig} = require('./serverInit.js');
+// (async () => {
+//     let result = await initServerNginxConfig(process.env.PUBLISHER_DOMAIN);
 
-    if (!result.success) {
-        console.log(`Can't set nginx config, error: ${result.error}`);
-        process.exit(1);
-    }
-})();
+//     if (!result.success) {
+//         console.log(`Can't set nginx config, error: ${result.error}`);
+//         process.exit(1);
+//     } elsse {
+//         console.log('Initializing server complete');
+//     }
+// })();
 /// Configing publisher server nginx for browse publisher clients and call their apis
 
 let express = require('express');
