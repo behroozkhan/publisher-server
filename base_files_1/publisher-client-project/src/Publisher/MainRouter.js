@@ -37,6 +37,8 @@ export default class MainRouter extends React.Component {
             />
         }
 
+        console.log("basename", this.basename)
+
         return (
                 <Switch>
                     <Route path="/login" basename={this.basename}>
