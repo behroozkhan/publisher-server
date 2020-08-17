@@ -1,10 +1,9 @@
-import Response from '../utils/response';
-import {sequelize, findAndCountAll} from '../model-manager/models';
-import PublisherUtils from '../utils/publisherUtils';
+let Response = require('../utils/response');
+let {sequelize, findAndCountAll, models} = require('../model-manager/models');
+let PublisherUtils = require('../utils/publisherUtils');
 
 let express = require('express');
 let router = express.Router();
-let models = require('models');
 let moment = require('moment');
 
 router.get('/', async (req, res) => {

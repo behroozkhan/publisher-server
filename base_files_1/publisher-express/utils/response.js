@@ -1,4 +1,4 @@
-class Response {
+module.exports = class Response {
     constructor(success = true, data = {}, message = "") {
         this.success = success;
         this.message = message;
@@ -13,5 +13,3 @@ class Response {
         };
     }
 }
-
-module.exports = Response;
