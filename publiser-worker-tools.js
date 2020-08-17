@@ -103,7 +103,7 @@ let start = async (req, res) => {
         }
 
         // TODO can change with forever and pm2
-        console.log("Express Configs npm run start ...");
+        console.log(`Express Configs npm run start port ${freePort} ...`);
         command = 'npm run start';
         let startResult = await execShellCommand(command, {
             cwd: newExpressPath
