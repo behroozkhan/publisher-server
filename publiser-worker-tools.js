@@ -59,7 +59,7 @@ let start = async (req, res) => {
     let newClientBuildPath = `${path}/build`;
 
     let dotEnvExpressPath = `${newExpressPath}/.env`;
-    let clientConfigPath = `${newClientProjectPath}/src/Config/config.json`;
+    let clientConfigPath = `${newClientProjectPath}/src/Config/test`;
 
     let nginxSitesPath = process.env.NGINX_SITES_PATH;
 
