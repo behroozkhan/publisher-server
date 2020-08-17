@@ -22,6 +22,7 @@ let app = express();
 const appBaseRoute = '/worker';
 
 app.post(appBaseRoute + '/start', async function (req, res) {
+    console.log("/start", "called");
     await start(req, res);
 })
 
