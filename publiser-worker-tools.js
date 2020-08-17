@@ -92,7 +92,6 @@ let start = async (req, res) => {
             cwd: newExpressPath
         });
         
-        console.log("Installing result", installResult);
         if (!installResult.success) {
             throw new Error ('Installing failed !!!');
         }
@@ -103,6 +102,7 @@ let start = async (req, res) => {
             cwd: newExpressPath
         });
         
+        console.log("startResult", startResult);
         if (!startResult.success) {
             throw new Error ('Running failed !!!');
         }
