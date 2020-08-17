@@ -104,11 +104,11 @@ let start = async (req, res) => {
         fsPromises.writeFile(data, newDotEnv, 'utf8');
 
         command = 'npm run build';
-        let startResult = await execP(command, {
+        let buildResult = await execP(command, {
             cwd: newClientProjectPath
         });
         
-        if (startResult.status !== 0) {
+        if (buildResult.status !== 0) {
             throw new Error ('Building client failed !!!');
         }
 
