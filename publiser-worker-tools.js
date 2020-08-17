@@ -102,7 +102,7 @@ let start = async (req, res) => {
             cwd: newExpressPath
         });
         
-        console.log("startResult", startResult);
+        console.log("startResult", startResult, "freeport", freePort);
         if (!startResult.success) {
             throw new Error ('Running failed !!!');
         }

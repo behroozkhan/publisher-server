@@ -43,6 +43,7 @@ app.get(appBaseRoute + '/test', function (req, res) {
     );
 })
 
+console.log(process.env.PORT);
 sequelize.sync().then(() => {
     app.listen(process.env.PORT, () => {
         console.log(`Publisher express server listening on port ${process.env.PORT}!`);
