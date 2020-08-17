@@ -89,7 +89,7 @@ let start = async (req, res) => {
         /// Client Configs
         await ncpAsync(clientPath, path);
 
-        let data = await fsPromises.readFile(clientConfigPath, 'utf8');
+        data = await fsPromises.readFile(clientConfigPath, 'utf8');
         let dbName = `PublisherDB_${publisherId}`;
         let baseApiUrl = `${
             !hasPrivateDomain ? 'publisherapi.' + process.env.PUBLISHER_DOMAIN + 
@@ -119,7 +119,7 @@ let start = async (req, res) => {
 
         /// NginX Configs
         if (hasPrivateDomain) {
-            let data = await fsPromises.readFile(nginxConfPath, 'utf8');
+            data = await fsPromises.readFile(nginxConfPath, 'utf8');
             publisherDomains.forEach(domainData => {
                 data = data
                 .replace(/{publisherId}/g, `Publisher_${publisherId}`)
