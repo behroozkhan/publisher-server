@@ -79,12 +79,12 @@ let start = async (req, res) => {
         fsPromises.writeFile(data, dotEnvExpressPath, 'utf8');
 
         let command = 'npm install';
-        let { status, stdout, stderr } = await execP(command, {
+        let installResult = await execP(command, {
             cwd: newExpressPath
         });
         
-        console.log("Installing result", status, stdout, stderr)
-        if (status !== 0) {
+        console.log("Installing result", installResult)
+        if (installResult.status !== 0) {
             throw new Error ('Installing failed !!!');
         }
 
