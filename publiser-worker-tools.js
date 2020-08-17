@@ -132,6 +132,7 @@ let start = async (req, res) => {
         data = data
             .replace(/{AuthUrl}/g, baseApiUrl)
             .replace(/{ServerUrl}/g, baseApiUrl)
+            .replace(/{BaseName}/g, `publisher_${publisherId}/client`)
             .replace(/{BrandName}/g, publisherBrandName);
 
         clientConfigPath += '.json';

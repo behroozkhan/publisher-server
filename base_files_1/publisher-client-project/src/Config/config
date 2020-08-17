@@ -1,5 +1,6 @@
 {
   "AuthUrl": "{AuthUrl}",
   "ServerUrl": "{ServerUrl}",
-  "BrandName": "{BrandName}"
+  "BrandName": "{BrandName}",
+  "BaseName": "{BaseName}"
 }
