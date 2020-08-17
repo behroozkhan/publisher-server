@@ -76,6 +76,8 @@ let start = async (req, res) => {
 
         let freePort = await getPort({port: getPort.makeRange(4000, 4999)});
 
+        console.log("dotEnvExpressPath", dotEnvExpressPath)
+        console.log("newExpressPath", newExpressPath)
         let data = await fsPromises.readFile(dotEnvExpressPath, 'utf8');
         let dbName = `${
             publisherBrandName? publisherBrandName + '_': ''
