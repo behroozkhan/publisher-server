@@ -51,7 +51,7 @@ let start = async (req, res) => {
     let clientPath = __dirname + baseFilePath + process.env.SOURCE_PUBLISHER_CLIENT;
     let nginxConfPath = __dirname + baseFilePath + process.env.SOURCE_NGINX_CONF;
     let basePath = process.env.PUBLISHER_EXPRESS_APP_BASE_PATH;
-    let path = `${basePath}/Publisher_${publisherId}`;
+    let path = `${basePath}/publisher_${publisherId}`;
 
     let newExpressPath = `${path}/publisher-express`;
     let newClientProjectPath = `${path}/publisher-client-project`;
@@ -167,7 +167,7 @@ let start = async (req, res) => {
             data = await fsPromises.readFile(nginxConfPath, 'utf8');
             publisherDomains.forEach(async domainData => {
                 data = data
-                .replace(/{publisherId}/g, `Publisher_${publisherId}`)
+                .replace(/{publisherId}/g, `publisher_${publisherId}`)
                 .replace(/{serverName}/g, `${domainData.root} ${domainData.subs.join(' ')}`)
                 .replace(/{apiPort}/g, freePort);
     
