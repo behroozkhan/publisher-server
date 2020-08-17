@@ -75,7 +75,9 @@ let start = async (req, res) => {
         let freePort = await getPort({port: getPort.makeRange(4000, 4999)});
 
         let data = await fsPromises.readFile(dotEnvExpressPath, 'utf8');
-        let dbName = `PublisherDB_${publisherId}`;
+        let dbName = `${
+            publisherBrandName? publisherBrandName + '_': ''
+        }PublisherDB_${publisherId}`;
         data = data
             .replace(/{dbName}/g, dbName)
             .replace(/{postgres_username}/g, process.env.POSTGRES_USER)
