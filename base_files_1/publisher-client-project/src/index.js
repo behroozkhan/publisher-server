@@ -4,7 +4,7 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter as Router, withRouter} from 'react-router-dom';
 import MainRouter from "./Publisher/MainRouter";
-import config from '../Config/config.json';
+import config from './Config/config.json';
         
 const MainApp = withRouter(props => <MainRouter {...props}/>);
 
