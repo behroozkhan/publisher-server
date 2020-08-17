@@ -1,6 +1,6 @@
 let { getConfig } = require("../models/config");
 
-let PublisherUtils;
+let PublisherUtils = {};
 
 PublisherUtils.getBackMoney = (oldPlan) => {
     if (!oldPlan)
