@@ -17,9 +17,9 @@ function existsAsync(path) {
   })
 }
 
-function execShellCommand(cmd) {
+function execShellCommand(cmd, config) {
     return new Promise((resolve, reject) => {
-        exec(cmd, (error, stdout, stderr) => {
+        exec(cmd, config, (error, stdout, stderr) => {
             let success = !(error);
             resolve({success, stdout, stderr, error});
         });
@@ -102,7 +102,7 @@ let start = async (req, res) => {
             cwd: newExpressPath
         });
         
-        console.log("startResult", startResult, "freeport", freePort);
+        console.log("startResult", startResult, newExpressPath);
         if (!startResult.success) {
             throw new Error ('Running failed !!!');
         }
