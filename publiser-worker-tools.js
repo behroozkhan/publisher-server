@@ -83,7 +83,7 @@ let start = async (req, res) => {
             cwd: newExpressPath
         });
         
-        console.log("Installing result", installResult)
+        console.log("Installing result", installResult, typeof installResult);
         if (installResult.status !== 0) {
             throw new Error ('Installing failed !!!');
         }
@@ -114,7 +114,7 @@ let start = async (req, res) => {
             .replace(/{ServerUrl}/g, baseApiUrl)
             .replace(/{BrandName}/g, publisherBrandName);
 
-        fsPromises.writeFile(data, newDotEnv, 'utf8');
+        fsPromises.writeFile(newDotEnv, data, 'utf8');
 
         command = 'npm run build';
         let buildResult = await execP(command, {
