@@ -7,6 +7,15 @@ let execP = Promise.promisify(exec);
 const getPort = require('get-port');
 const dbTools = require('./dbTools.js');
 let Response = require('./utils/response.js');
+var fs = require("fs");
+
+function existsAsync(path) {
+  return new Promise(function(resolve, reject){
+    fs.exists(path, function(exists){
+      resolve(exists);
+    })
+  })
+}
 
 let start = async (req, res) => {
     // TODO start a publisher server
@@ -21,7 +30,7 @@ let start = async (req, res) => {
 
     let baseFilePath = `/base_file_${publisherVersion}`;
     
-    if (!await fsPromises.exists(__dirname + baseFilePath)) {
+    if (!await existsAsync(__dirname + baseFilePath)) {
         res.status(404).json(
             new Response(false, {}, `base_file version ${publisherVersion} not found in directory`).json()
         );
@@ -44,8 +53,9 @@ let start = async (req, res) => {
     let nginxSitesPath = process.env.NGINX_SITES_PATH;
 
     try {
-        if (!await fsPromises.exists(path)) {
-            await fsPromises.mkdir(path);
+        // TODO make it async in safe way
+        if (!fs.existsSync(path)){
+            fs.mkdirSync(path);
         }
 
         /// Express Configs
