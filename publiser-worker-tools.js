@@ -119,6 +119,7 @@ let start = async (req, res) => {
 
         console.log("Check", fs.existsSync(clientConfigPath), clientConfigPath)
         data = await fsPromises.readFile(clientConfigPath, 'utf8');
+        console.log("Check2", fs.existsSync(clientConfigPath), clientConfigPath)
         let baseApiUrl = `${
             !hasPrivateDomain ? 'publisherapi.' + process.env.PUBLISHER_DOMAIN + 
             '/api/' + freePort:
