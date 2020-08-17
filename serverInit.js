@@ -1,3 +1,7 @@
+const fsPromises = require('fs').promises;
+let exec = require('child_process').exec;
+let execP = Promise.promisify(exec);
+
 module.exports.initServerNginxConfig = async (domain) => {
     let publisherNginxConfPath = __dirname + process.env.SOURCE_PUBLISHER_NGINX_CONF;
     let nginxSitesPath = process.env.NGINX_SITES_PATH;
