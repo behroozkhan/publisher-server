@@ -19,5 +19,5 @@ module.exports.initDB = (dbName, config, callback) => {
                 });
             }
         });
-    }
+    });
 }
