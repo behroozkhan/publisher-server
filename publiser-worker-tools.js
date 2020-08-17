@@ -68,8 +68,10 @@ let start = async (req, res) => {
         if (!fs.existsSync(path)){
             fs.mkdirSync(path);
         }
+        console.log("Starting publisher");
 
         /// Express Configs
+        console.log("Express Configs ...");
         await ncpAsync(expressPath, newExpressPath);
 
         let freePort = await getPort({port: getPort.makeRange(4000, 4999)});
@@ -89,6 +91,7 @@ let start = async (req, res) => {
 
         fsPromises.writeFile(dotEnvExpressPath, data, 'utf8');
 
+        console.log("Express Configs npm install ...");
         let command = 'npm install';
         let installResult = await execShellCommand(command, {
             cwd: newExpressPath
@@ -99,18 +102,19 @@ let start = async (req, res) => {
         }
 
         // TODO can change with forever and pm2
+        console.log("Express Configs npm run start ...");
         command = 'npm run start';
         let startResult = await execShellCommand(command, {
             cwd: newExpressPath
         });
         
-        console.log("startResult", startResult, newExpressPath);
         if (!startResult.success) {
             throw new Error ('Running failed !!!');
         }
         /// Express Configs
 
         /// Client Configs
+        console.log("Client configs ...");
         await ncpAsync(clientPath, newClientProjectPath);
 
         data = await fsPromises.readFile(clientConfigPath, 'utf8');
@@ -127,6 +131,7 @@ let start = async (req, res) => {
 
         fsPromises.writeFile(newDotEnv, data, 'utf8');
         
+        console.log("Client configs npm install ...");
         command = 'npm install';
         let installClientResult = await execShellCommand(command, {
             cwd: newClientProjectPath
@@ -136,6 +141,7 @@ let start = async (req, res) => {
             throw new Error ('Installing client failed !!!');
         }
 
+        console.log("Client configs npm run build ...");
         command = 'npm run build';
         let buildResult = await execShellCommand(command, {
             cwd: newClientProjectPath
@@ -145,12 +151,14 @@ let start = async (req, res) => {
             throw new Error ('Building client failed !!!');
         }
 
+        console.log("Client configs copying builded files...");
         await ncpAsync(clientGeneratedBuildPath, newClientBuildPath);
         await fsPromises.rename(`${path}/build`, `${path}/client`)
         /// Client Configs
 
         /// NginX Configs
         if (hasPrivateDomain) {
+            console.log("NginX Configs ...");
             data = await fsPromises.readFile(nginxConfPath, 'utf8');
             publisherDomains.forEach(async domainData => {
                 data = data
@@ -170,10 +178,13 @@ let start = async (req, res) => {
                     throw new Error ('Nginx error !!!');
                 }
             });
+        } else {
+            console.log("No need to NginX Configs ...");
         }
         /// NginX Configs
         
         /// Database Configs
+            console.log("Database Configs ...");
         let initDbResult = await dbTools.initDB(dbName, {
             user: process.env.POSTGRES_USER,
             host: postgresHost,
@@ -187,7 +198,8 @@ let start = async (req, res) => {
         }
         /// Database Configs
 
-        res.status(404).json(
+        console.log("Finish, Publisher express and client configed successfully.");
+        res.json(
             new Response(true, {
                 dataJsonPath: `${path}/public/data.json`,
                 expressPort: freePort
@@ -195,6 +207,7 @@ let start = async (req, res) => {
         );
     } 
     catch (error) {
+        console.log("Configing Error", error);
         res.status(404).json(
             new Response(false, {}, error.message).json()
         );
