@@ -59,7 +59,7 @@ let start = async (req, res) => {
     let newClientBuildPath = `${path}/build`;
 
     let dotEnvExpressPath = `${newExpressPath}/.env`;
-    let clientConfigPath = `${newClientProjectPath}/src/Config/config.temp`;
+    let clientConfigPath = `${newClientProjectPath}/src/Config/config`;
 
     let nginxSitesPath = process.env.NGINX_SITES_PATH;
 
@@ -132,7 +132,7 @@ let start = async (req, res) => {
             .replace(/{BrandName}/g, publisherBrandName);
 
         console.log("Check3", data)
-        clientConfigPath = clientConfigPath.replace('temp', 'json')
+        clientConfigPath += '.json';
         await fsPromises.writeFile(clientConfigPath, data, 'utf8');
         console.log("Check4", data)
         
