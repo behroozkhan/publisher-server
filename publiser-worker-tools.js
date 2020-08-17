@@ -89,7 +89,7 @@ let start = async (req, res) => {
             .replace(/{postgres_host}/g, postgresHost)
             .replace(/{hasCustomDomain}/g, hasPrivateDomain);
 
-        fsPromises.writeFile(dotEnvExpressPath, data, 'utf8');
+        await fsPromises.writeFile(dotEnvExpressPath, data, 'utf8');
 
         console.log("Express Configs npm install ...");
         let command = 'npm install';
@@ -129,7 +129,7 @@ let start = async (req, res) => {
             .replace(/{ServerUrl}/g, baseApiUrl)
             .replace(/{BrandName}/g, publisherBrandName);
 
-        fsPromises.writeFile(newDotEnv, data, 'utf8');
+        await fsPromises.writeFile(clientConfigPath, data, 'utf8');
         
         console.log("Client configs npm install ...");
         command = 'npm install';
@@ -168,7 +168,7 @@ let start = async (req, res) => {
     
                 nginxSitesPath = `${nginxSitesPath}/${domainData.root}.conf`;
         
-                fsPromises.writeFile(nginxSitesPath, data, 'utf8');
+                await fsPromises.writeFile(nginxSitesPath, data, 'utf8');
                 
                 command = `echo ${sudoPassword} | sudo -S nginx reload`;
         
