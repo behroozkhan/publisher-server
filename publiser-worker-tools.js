@@ -64,7 +64,7 @@ let start = async (req, res) => {
     let newExpressPath = `${path}/publisher-express`;
     let newClientProjectPath = `${path}/publisher-client-project`;
     let clientGeneratedBuildPath = `${path}/publisher-client-project/build`;
-    let newClientBuildPath = `${path}/build`;
+    let newClientBuildPath = `${path}/client`;
 
     let dotEnvExpressPath = `${newExpressPath}/.env`;
     let clientConfigPath = `${newClientProjectPath}/src/Config/config`;
@@ -173,7 +173,6 @@ let start = async (req, res) => {
         console.log("Client configs copying builded files...");
         await ncpAsync(clientGeneratedBuildPath, newClientBuildPath);
         await waitForMilis(1000);
-        await fsPromises.rename(`${path}/build`, `${path}/client`)
         /// Client Configs
 
         /// NginX Configs
