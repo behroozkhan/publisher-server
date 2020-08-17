@@ -1,4 +1,5 @@
 require('dotenv').config();
+let Response = require('./utils/response.js');
 
 /// Configing publisher server nginx for browse publisher clients and call their apis
 // TODO uncomment lines below to initial a publisher server if nginx not configed before
@@ -47,6 +48,14 @@ app.post(appBaseRoute + '/removedomain', async function (req, res) {
 
 app.get(appBaseRoute + '/resourceusage', async function (req, res) {
     // TODO return resource useage
+})
+
+app.get(appBaseRoute + '/test', function (req, res) {
+    res.json(
+        new Response(true, {}, 
+            "Tested Successfully"
+        ).json()
+    );
 })
 
 app.listen(process.env.PORT, () => {
