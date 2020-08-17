@@ -119,7 +119,7 @@ let start = async (req, res) => {
         /// NginX Configs
         if (hasPrivateDomain) {
             data = await fsPromises.readFile(nginxConfPath, 'utf8');
-            publisherDomains.forEach(domainData => {
+            publisherDomains.forEach(async domainData => {
                 data = data
                 .replace(/{publisherId}/g, `Publisher_${publisherId}`)
                 .replace(/{serverName}/g, `${domainData.root} ${domainData.subs.join(' ')}`)
