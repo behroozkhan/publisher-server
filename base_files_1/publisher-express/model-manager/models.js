@@ -1,4 +1,14 @@
 let Sequelize = require('sequelize');
+const User = require('../models/user');
+const Plan = require('../models/plan');
+const Website = require('../models/website');
+const WebsitePlan = require('../models/website-plan');
+const App = require('../models/app');
+const Service = require('../models/service');
+const Component = require('../models/component');
+const Config = require('../models/config');
+const CreditTransaction = require('../models/credit-transaction');
+const {DataTypes} = Sequelize;
  
 const sequelize = new Sequelize(
     process.env.DATABASE,
@@ -11,15 +21,15 @@ const sequelize = new Sequelize(
 );
 
 const models = {
-    User: sequelize.import('./user.js'),
-    Plan: sequelize.import('./plan.js'),
-    Website: sequelize.import('./website.js'),
-    WebsitePlan: sequelize.import('./website-plan.js'),
-    App: sequelize.import('./app.js'),
-    Service: sequelize.import('./service.js'),
-    Component: sequelize.import('./component.js'),
-    Config: sequelize.import('./config.js'),
-    CreditTransaction: sequelize.import('./credit-transaction.js'),
+    User: User(sequelize, DataTypes),
+    Plan: Plan(sequelize, DataTypes),
+    Website: Website(sequelize, DataTypes),
+    WebsitePlan: WebsitePlan(sequelize, DataTypes),
+    App: App(sequelize, DataTypes),
+    Service: Service(sequelize, DataTypes),
+    Component: Component(sequelize, DataTypes),
+    Config: Config(sequelize, DataTypes),
+    CreditTransaction: CreditTransaction(sequelize, DataTypes),
 };
 
 let findAndCountAll = (req, res, model) => {
