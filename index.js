@@ -6,7 +6,7 @@ let {initServerNginxConfig} = require('./serverInit.js');
     let result = await initServerNginxConfig(process.env.PUBLISHER_DOMAIN);
 
     if (!result.success) {
-        console.log(`Can't set nginx config, error: ${error}`);
+        console.log(`Can't set nginx config, error: ${result.error}`);
         process.exit(1);
     }
 })();
