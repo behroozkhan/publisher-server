@@ -113,7 +113,7 @@ let start = async (req, res) => {
         });
         
         if (!startResult.success) {
-            console.log("Error: ", startResult.error);
+            console.log("Error: ",startResult.stdout, startResult.error);
             throw new Error ('Running failed !!!');
         }
         /// Express Configs
