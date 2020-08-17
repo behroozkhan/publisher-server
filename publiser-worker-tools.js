@@ -117,6 +117,7 @@ let start = async (req, res) => {
         console.log("Client configs ...");
         await ncpAsync(clientPath, newClientProjectPath);
 
+        console.log("Check", fs.existsSync(clientConfigPath), clientConfigPath)
         data = await fsPromises.readFile(clientConfigPath, 'utf8');
         let baseApiUrl = `${
             !hasPrivateDomain ? 'publisherapi.' + process.env.PUBLISHER_DOMAIN + 
