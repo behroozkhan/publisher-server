@@ -42,7 +42,7 @@ let start = async (req, res) => {
     let clientPath = __dirname + baseFilePath + process.env.SOURCE_PUBLISHER_CLIENT;
     let nginxConfPath = __dirname + baseFilePath + process.env.SOURCE_NGINX_CONF;
     let basePath = process.env.PUBLISHER_EXPRESS_APP_BASE_PATH;
-    let path = `${basePath}/${publisherId}`;
+    let path = `${basePath}/Publisher_${publisherId}`;
 
     let newExpressPath = `${path}/publisher-express`;
     let newClientProjectPath = `${path}/publisher-client-project`;
@@ -60,7 +60,7 @@ let start = async (req, res) => {
         }
 
         /// Express Configs
-        await ncpAsync(expressPath, path);
+        await ncpAsync(expressPath, newExpressPath);
 
         let freePort = await getPort({port: getPort.makeRange(4000, 4999)});
 
