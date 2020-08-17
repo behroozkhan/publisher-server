@@ -17,6 +17,21 @@ function existsAsync(path) {
   })
 }
 
+/**
+ * Executes a shell command and return it as a Promise.
+ * @param cmd {string}
+ * @return {Promise<string>}
+ */
+function execShellCommand(cmd) {
+    const exec = require('child_process').exec;
+    return new Promise((resolve, reject) => {
+        exec(cmd, (error, stdout, stderr) => {
+            let success = !!error;
+            resolve({success, stdout, stderr, error});
+        });
+    });
+}
+
 let start = async (req, res) => {
     // TODO start a publisher server
     // TODO 1. copy base weblancer landing page & publisher express to an appropriate folder
@@ -79,22 +94,22 @@ let start = async (req, res) => {
         fsPromises.writeFile(dotEnvExpressPath, data, 'utf8');
 
         let command = 'npm install';
-        let installResult = await execP(command, {
+        let installResult = await execShellCommand(command, {
             cwd: newExpressPath
         });
         
-        console.log("Installing result", installResult, typeof installResult);
-        if (installResult.status !== 0) {
+        console.log("Installing result", installResult);
+        if (!installResult.success) {
             throw new Error ('Installing failed !!!');
         }
 
         // TODO can change with forever and pm2
         command = 'npm run start';
-        let startResult = await execP(command, {
+        let startResult = await execShellCommand(command, {
             cwd: newExpressPath
         });
         
-        if (startResult.status !== 0) {
+        if (!startResult.success) {
             throw new Error ('Running failed !!!');
         }
         /// Express Configs
@@ -115,13 +130,22 @@ let start = async (req, res) => {
             .replace(/{BrandName}/g, publisherBrandName);
 
         fsPromises.writeFile(newDotEnv, data, 'utf8');
-
-        command = 'npm run build';
-        let buildResult = await execP(command, {
+        
+        command = 'npm install';
+        let installClientResult = await execShellCommand(command, {
             cwd: newClientProjectPath
         });
         
-        if (buildResult.status !== 0) {
+        if (!installClientResult.success) {
+            throw new Error ('Installing client failed !!!');
+        }
+
+        command = 'npm run build';
+        let buildResult = await execShellCommand(command, {
+            cwd: newClientProjectPath
+        });
+        
+        if (!buildResult.success) {
             throw new Error ('Building client failed !!!');
         }
 
@@ -144,9 +168,9 @@ let start = async (req, res) => {
                 
                 command = `echo ${sudoPassword} | sudo -S nginx reload`;
         
-                let nginxResult = await execP(command);
+                let nginxResult = await execShellCommand(command);
                 
-                if (nginxResult.status !== 0) {
+                if (!nginxResult.success) {
                     throw new Error ('Nginx error !!!');
                 }
             });
@@ -154,13 +178,17 @@ let start = async (req, res) => {
         /// NginX Configs
         
         /// Database Configs
-        dbTools.initDB(dbName, {
+        let initDbResult = await dbTools.initDB(dbName, {
             user: process.env.POSTGRES_USER,
             host: postgresHost,
             database: 'WeblancerMain',
             password: process.env.POSTGRES_PASSWORD,
             port: 5432,
         })
+
+        if (!initDbResult.success) {
+            throw new Error ('Database init failed !!!');
+        }
         /// Database Configs
 
         res.status(404).json(
