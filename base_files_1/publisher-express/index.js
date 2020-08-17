@@ -7,7 +7,7 @@ require('dotenv').config();
 
 let express = require('express');
 let app = express();
-const appBaseRoute = '/api';
+let appBaseRoute = '/api';
 if (process.env.HAS_CUSTOM_DOMAIN) {
     appBaseRoute += `/${process.env.PORT}`
 }
