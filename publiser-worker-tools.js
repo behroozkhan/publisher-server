@@ -68,6 +68,7 @@ let start = async (req, res) => {
 
     let dotEnvExpressPath = `${newExpressPath}/.env`;
     let clientConfigPath = `${newClientProjectPath}/src/Config/config`;
+    let clientPackagePath = `${newClientProjectPath}/package.json`;
 
     let nginxSitesPath = process.env.NGINX_SITES_PATH;
 
@@ -147,6 +148,11 @@ let start = async (req, res) => {
 
         clientConfigPath += '.json';
         await fsPromises.writeFile(clientConfigPath, data, 'utf8');
+
+        data = await fsPromises.readFile(clientPackagePath, 'utf8');
+        data = data
+            .replace(/{homepage}/g, `/publisher_${publisherId}/client`);
+        await fsPromises.writeFile(clientPackagePath, data, 'utf8');
         
         console.log("Client configs npm install ...");
         command = 'npm install';
