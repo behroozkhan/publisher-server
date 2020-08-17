@@ -30,6 +30,7 @@ let start = async (req, res) => {
 
     let baseFilePath = `/base_file_${publisherVersion}`;
     
+    console.log("path: ", __dirname + baseFilePath)
     if (!await existsAsync(__dirname + baseFilePath)) {
         res.status(404).json(
             new Response(false, {}, `base_file version ${publisherVersion} not found in directory`).json()
