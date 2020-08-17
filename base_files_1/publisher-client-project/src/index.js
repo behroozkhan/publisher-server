@@ -4,12 +4,13 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter as Router, withRouter} from 'react-router-dom';
 import MainRouter from "./Publisher/MainRouter";
-
+import config from '../Config/config.json';
+        
 const MainApp = withRouter(props => <MainRouter {...props}/>);
 
 ReactDOM.render(
   <React.StrictMode>
-      <Router>
+      <Router basename={config.BaseName}>
           <MainApp/>
       </Router>
   </React.StrictMode>,
