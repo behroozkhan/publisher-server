@@ -118,7 +118,8 @@ let start = async (req, res) => {
         await ncpAsync(clientPath, newClientProjectPath);
 
         console.log("Check", fs.existsSync(clientConfigPath), clientConfigPath)
-        data = await fsPromises.readFile(clientConfigPath);
+        data = JSON.stringify(require(clientConfigPath));
+        // data = await fsPromises.readFile(clientConfigPath);
         console.log("Check2", fs.existsSync(clientConfigPath), clientConfigPath)
         let baseApiUrl = `${
             !hasPrivateDomain ? 'publisherapi.' + process.env.PUBLISHER_DOMAIN + 
@@ -131,7 +132,9 @@ let start = async (req, res) => {
             .replace(/{ServerUrl}/g, baseApiUrl)
             .replace(/{BrandName}/g, publisherBrandName);
 
+        console.log("Check3", data)
         await fsPromises.writeFile(clientConfigPath, data);
+        console.log("Check4", data)
         
         console.log("Client configs npm install ...");
         command = 'npm install';
