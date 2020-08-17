@@ -21,28 +21,28 @@ app.post(appBaseRoute + '/start', async function (req, res) {
     await start(req, res);
 })
 
-app.post(appBaseRoute + '/stop', function (req, res) {
+app.post(appBaseRoute + '/stop', async function (req, res) {
     // TODO stop a publisher server
     // TODO 1. set nginx to return custom html file for publisher server
 })
 
-app.post(appBaseRoute + '/update', function (req, res) {
+app.post(appBaseRoute + '/update', async function (req, res) {
     await update(req, res);
 })
 
-app.post(appBaseRoute + '/remove', function (req, res) {
+app.post(appBaseRoute + '/remove', async function (req, res) {
     // TODO remove a publisher server
 })
 
-app.post(appBaseRoute + '/setdomain', function (req, res) {
+app.post(appBaseRoute + '/setdomain', async function (req, res) {
     // TODO set domain for exist publisher server
 })
 
-app.post(appBaseRoute + '/removedomain', function (req, res) {
+app.post(appBaseRoute + '/removedomain', async function (req, res) {
     // TODO remove domain for exist publisher server
 })
 
-app.get(appBaseRoute + '/resourceusage', function (req, res) {
+app.get(appBaseRoute + '/resourceusage', async function (req, res) {
     // TODO return resource useage
 })
 
