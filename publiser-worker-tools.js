@@ -76,7 +76,7 @@ let start = async (req, res) => {
             .replace(/{postgres_host}/g, postgresHost)
             .replace(/{hasCustomDomain}/g, hasPrivateDomain);
 
-        fsPromises.writeFile(data, dotEnvExpressPath, 'utf8');
+        fsPromises.writeFile(dotEnvExpressPath, data, 'utf8');
 
         let command = 'npm install';
         let installResult = await execP(command, {
