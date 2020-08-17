@@ -91,6 +91,7 @@ let start = async (req, res) => {
             .replace(/{postgres_host}/g, postgresHost)
             .replace(/{hasCustomDomain}/g, hasPrivateDomain);
 
+        console.log("dotEnvData", data)
         await fsPromises.writeFile(dotEnvExpressPath, data, 'utf8');
 
         console.log("Express Configs npm install ...");
