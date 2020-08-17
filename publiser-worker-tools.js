@@ -28,12 +28,12 @@ let start = async (req, res) => {
     let {publisherId, publisherDomains, sudoPassword, postgresHost,
         hasPrivateDomain, publisherBrandName, publisherVersion} = req.body;
 
-    let baseFilePath = `/base_file_${publisherVersion}`;
+    let baseFilePath = `/base_files_${publisherVersion}`;
     
     console.log("path: ", __dirname + baseFilePath)
     if (!await existsAsync(__dirname + baseFilePath)) {
         res.status(404).json(
-            new Response(false, {}, `base_file version ${publisherVersion} not found in directory`).json()
+            new Response(false, {}, `base_files version ${publisherVersion} not found in directory`).json()
         );
         return;
     }
