@@ -45,7 +45,7 @@ PublisherUtils.isSubDomainUnique = (subDomain) => {
 PublisherUtils.createOrUpgradeWebsiteInWeblancer = async (endUserId, endWebsiteId,
     resourcePlanId, permissionPlansId, planType, planOrder, metaData) => {
 
-    let weblancerWebsiteCreateUrl = await getConfig("WeblancerWebsiteCreateUrl");
+    let weblancerWebsiteCreateUrl = (await getConfig("WeblancerWebsiteCreateUrl")).value;
 
     return axios.post(`${weblancerWebsiteCreateUrl}`, {
         endUserId, endWebsiteId, resourcePlanId, permissionPlansId, planType, planOrder, metaData

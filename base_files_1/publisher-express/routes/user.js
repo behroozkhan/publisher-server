@@ -146,8 +146,8 @@ router.post('/paymentinit',async function (req, res) {
 
     let resNum = (planId && website)? makeResNumByPlanId(website, planId): makeResNumByUser(user);
 
-    let weblancerPaymentInitURL = await getConfig('WeblancerPaymentInitURL');
-    let publisherId = await getConfig('PublisherId');
+    let weblancerPaymentInitURL = (await getConfig('WeblancerPaymentInitURL')).value;
+    let publisherId = (await getConfig('PublisherId')).value;
     
     if (!weblancerPaymentInitURL || !publisherId){
         onError(404, new Response(false, {}, "Can't get configs from db").json());
@@ -177,8 +177,8 @@ router.post('/paymentverify',async function (req, res) {
     // user want to charge credit
     let paymentResponse = req.body.paymentResponse;
 
-    let weblancerPaymentVerifyURL = await getConfig('weblancerPaymentVerifyURL');
-    let publisherId = await getConfig('PublisherId');
+    let weblancerPaymentVerifyURL = (await getConfig('weblancerPaymentVerifyURL')).value;
+    let publisherId = (await getConfig('PublisherId')).value;
     
     if (!weblancerPaymentInitURL || !publisherId){
         res.status(404).json(

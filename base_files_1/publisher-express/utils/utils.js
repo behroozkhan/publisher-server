@@ -27,12 +27,12 @@ module.exports.makeResNum = function makeResNum(length) {
 }
 
 module.exports.makeResNumByUser = async (user) => {
-    let publisherId = await getConfig('PublisherId');
+    let publisherId = (await getConfig('PublisherId')).value;
     return `Tr_${publisherId}_U_${user.id}_${user.credit}_${user.creditTransactions.length}`;
 }
 
 module.exports.makeResNumByWebsite = async (website, planId) => {
-    let publisherId = await getConfig('PublisherId');
+    let publisherId = (await getConfig('PublisherId')).value;
     return `Tr_${publisherId}_WP_${website.id}_${website.websitePlans.length}_${planId}`;
 }
 
