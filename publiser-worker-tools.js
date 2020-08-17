@@ -47,6 +47,7 @@ let start = async (req, res) => {
     let newExpressPath = `${path}/publisher-express`;
     let newClientProjectPath = `${path}/publisher-client-project`;
     let clientGeneratedBuildPath = `${path}/publisher-client-project/build`;
+    let newClientBuildPath = `${path}/build`;
 
     let dotEnvExpressPath = `${newExpressPath}/.env`;
     let clientConfigPath = `${newClientProjectPath}/src/Config/config.js`;
@@ -82,6 +83,7 @@ let start = async (req, res) => {
             cwd: newExpressPath
         });
         
+        console.log("Installing result", status, stdout, stderr)
         if (status !== 0) {
             throw new Error ('Installing failed !!!');
         }
@@ -98,7 +100,7 @@ let start = async (req, res) => {
         /// Express Configs
 
         /// Client Configs
-        await ncpAsync(clientPath, path);
+        await ncpAsync(clientPath, newClientProjectPath);
 
         data = await fsPromises.readFile(clientConfigPath, 'utf8');
         let baseApiUrl = `${
@@ -123,7 +125,7 @@ let start = async (req, res) => {
             throw new Error ('Building client failed !!!');
         }
 
-        await ncpAsync(clientGeneratedBuildPath, path);
+        await ncpAsync(clientGeneratedBuildPath, newClientBuildPath);
         await fsPromises.rename(`${path}/build`, `${path}/client`)
         /// Client Configs
 
