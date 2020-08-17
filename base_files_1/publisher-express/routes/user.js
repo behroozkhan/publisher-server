@@ -1,12 +1,11 @@
 let {makeResNumByUser, makeResNumByPlanId} = require('../utils/utils.js');
 let { getConfig } = require("../models/config.js");
 let Response = require('../utils/response');
-let {sequelize} = require('../model-manager/models');
+let {sequelize, models} = require('../model-manager/models');
 let PublisherUtils = require('../utils/publisherUtils');
 
 let express = require('express');
 let router = express.Router();
-let models = require('models');
 let jwt = require('jsonwebtoken');
 
 const axios = require('axios');
