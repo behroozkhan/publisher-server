@@ -90,7 +90,6 @@ let start = async (req, res) => {
         await ncpAsync(clientPath, path);
 
         data = await fsPromises.readFile(clientConfigPath, 'utf8');
-        let dbName = `PublisherDB_${publisherId}`;
         let baseApiUrl = `${
             !hasPrivateDomain ? 'publisherapi.' + process.env.PUBLISHER_DOMAIN + 
             '/api/' + freePort:
