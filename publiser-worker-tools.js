@@ -182,8 +182,7 @@ let start = async (req, res) => {
 
         // killing old express port
         if (expressPort) {
-            command = `fuser -k ${expressPort}/tcp`;
-            await execShellCommand(command);
+            await execShellCommand(`fuser -k ${expressPort}/tcp`);
         }
 
         console.log("Express Configs ...");
