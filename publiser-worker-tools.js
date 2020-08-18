@@ -94,6 +94,10 @@ let start = async (req, res) => {
         }
         console.log("Starting publisher");
         
+        let dbName = `${
+            publisherBrandName? publisherBrandName + '_': ''
+        }PublisherDB_${publisherId}`;
+        
         /// Database Configs
         console.log("Database Configs ...");
         let initDbResult = await dbTools.initDB(dbName, {
@@ -120,9 +124,6 @@ let start = async (req, res) => {
         console.log("dotEnvExpressPath", dotEnvExpressPath)
         console.log("newExpressPath", newExpressPath)
         let data = await fsPromises.readFile(dotEnvExpressPath, 'utf8');
-        let dbName = `${
-            publisherBrandName? publisherBrandName + '_': ''
-        }PublisherDB_${publisherId}`;
         data = data
             .replace(/{dbName}/g, dbName)
             .replace(/{postgres_username}/g, process.env.POSTGRES_USER)
