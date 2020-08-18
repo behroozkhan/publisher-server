@@ -215,7 +215,7 @@ let start = async (req, res) => {
             longProcessId, 'Express Configs npm install ...', 'running', {
                 progress: 9
             });
-        let command = 'npm install';
+        let command = 'yarn install';
         let installResult = await execShellCommand(command, {
             cwd: newExpressPath,
             env: expressDotEnvObject
@@ -292,7 +292,7 @@ let start = async (req, res) => {
             longProcessId, 'Client Configs npm install ...', 'running', {
                 progress: 50
             });
-        command = 'npm install';
+        command = 'yarn install';
         let installClientResult = await execShellCommand(command, {
             cwd: newClientProjectPath
         });
@@ -311,7 +311,7 @@ let start = async (req, res) => {
             longProcessId, 'Client Configs npm run build ...', 'running', {
                 progress: 70
             });
-        command = 'npm run build';
+        command = 'yarn build';
         let buildResult = await execShellCommand(command, {
             cwd: newClientProjectPath
         });
