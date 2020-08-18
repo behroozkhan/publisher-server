@@ -7,7 +7,6 @@ import PrivateRoute from "./PrivateRoute";
 import Dashboard from "./Pages/Dashboard/Dashboard";
 import Login from "./Pages/Login";
 import Server from "./Server";
-import config from '../Config/config.json';
 
 export default class MainRouter extends React.Component {
     constructor(props) {
@@ -17,8 +16,6 @@ export default class MainRouter extends React.Component {
         };
 
         Server.setRouter(this);
-        
-        this.basename = config.BaseName;
     }
 
     redirect = (redirectPath, redirectProps) => {
@@ -37,19 +34,17 @@ export default class MainRouter extends React.Component {
             />
         }
 
-        console.log("basename", this.basename)
-
         return (
                 <Switch>
-                    <Route path="/login" basename={this.basename}>
+                    <Route path="/login">
                         <Login router={this} {...this.state.redirectProps}/>
                     </Route>
 
-                    <PrivateRoute path="/dashboard" basename={this.basename}>
+                    <PrivateRoute path="/dashboard">
                         <Dashboard router={this} {...this.state.redirectProps}/>
                     </PrivateRoute>
 
-                    <PrivateRoute path="/" basename={this.basename}>
+                    <PrivateRoute path="/">
                         <Redirect
                             to={{
                                 pathname: "/dashboard",

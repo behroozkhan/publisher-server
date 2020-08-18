@@ -3,8 +3,6 @@ let { authorizeToken } = require('./acl/authorization.js');
 let { unlessRoute } = require('./utils/utils.js');
 let Response = require('./utils/response.js');
 
-require('dotenv').config();
-
 let express = require('express');
 let app = express();
 let appBaseRoute = '/api';
