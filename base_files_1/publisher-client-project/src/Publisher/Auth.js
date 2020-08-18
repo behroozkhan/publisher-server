@@ -44,6 +44,6 @@ class AuthManager {
 }
 
 // let Auth = new AuthManager("/whitelabel");
-let Auth = new AuthManager(config.AuthUrl);
+let Auth = new AuthManager('/api');
 
 export default Auth;

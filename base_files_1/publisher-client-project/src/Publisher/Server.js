@@ -58,6 +58,6 @@ class ServerManager {
 }
 
 // let Server = new ServerManager("/whitelabel");
-let Server = new ServerManager(config.ServerUrl);
+let Server = new ServerManager('/api');
 
 export default Server;
