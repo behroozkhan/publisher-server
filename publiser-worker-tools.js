@@ -9,6 +9,7 @@ const getPort = require('get-port');
 const dbTools = require('./dbTools.js');
 let Response = require('./utils/response.js');
 var fs = require("fs");
+let dotenv = require('dotenv');
 
 function existsAsync(path) {
   return new Promise(function(resolve, reject){
@@ -148,7 +149,8 @@ let start = async (req, res) => {
             .replace(/{postgres_host}/g, postgresHost)
             .replace(/{hasCustomDomain}/g, hasPrivateDomain);
 
-        console.log("dotEnvData", data)
+        let expressDotEnvObject = dotenv.parse(data);
+        console.log("dotEnvData", data, expressDotEnvObject)
         await fsPromises.writeFile(dotEnvExpressPath, data, 'utf8');
 
         console.log("Express Configs npm install ...");
@@ -171,8 +173,7 @@ let start = async (req, res) => {
         // }, true)
         command = 'npm run start';
         let startResult = await execShellCommand(command, {
-            cwd: newExpressPath,
-            detached:true
+            cwd: newExpressPath
         });
         
         console.log("startResult: ",startResult);
