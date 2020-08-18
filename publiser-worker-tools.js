@@ -107,10 +107,7 @@ let start = async (req, res) => {
     let nginxSitesPath = process.env.NGINX_SITES_PATH;
 
     res.json(
-        new Response(true, {
-            dataJsonPath: `${path}/public/data.json`,
-            expressPort: freePort
-        }).json()
+        new Response(true).json()
     );
     
     try {
