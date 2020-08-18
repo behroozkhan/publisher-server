@@ -39,12 +39,24 @@ function spawnAsync(cmd, args, options, unref) {
     return new Promise((resolve, reject) => {
         const ls = spawn(cmd, args, options);
 
+        let out = "";
+        let err = "";
+        ls.stdout.on('data', (data) => {
+            out += data;
+        });
+          
+        ls.stderr.on('data', (data) => {
+            err += data;
+        });
+
         ls.on('error', (error) => {
-            resolve({success: false, error: error});
+            console.log("Spawn Result: ", false, {stdout: out, stderr: err})
+            resolve({success: false, stdout: out, stderr: err, error: error});
         });
 
         ls.on("close", code => {
-            resolve({success: true});
+            console.log("Spawn Result: ", true, {stdout: out, stderr: err})
+            resolve({success: true, stdout: out, stderr: err});
         });
 
         if (unref)
@@ -159,6 +171,7 @@ let start = async (req, res) => {
             stdio: 'ignore'
         }, true);
         
+        console.log("startResult: ",startResult);
         if (!startResult.success) {
             console.log("Error: ",startResult.stdout, startResult.error);
             throw new Error ('Running failed !!!');
