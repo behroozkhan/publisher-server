@@ -123,9 +123,9 @@ let start = async (req, res) => {
             progress: 2
         });
 
-        let dbName = `${
-            publisherBrandName? publisherBrandName + '_': ''
-        }PublisherDB_${publisherId}`;
+        let dbName = `PublisherDB_${publisherId}${
+            publisherBrandName? '_' + publisherBrandName: ''
+        }`;
         
         /// Database Configs
         console.log("Database Configs ...");
