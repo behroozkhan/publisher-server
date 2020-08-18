@@ -174,7 +174,9 @@ let start = async (req, res) => {
             // detached:true
         // }, true)
         let newEnv = cloneDeep(process.env);
-        newEnv.TEST= "BEHROOz"
+        Object.keys(expressDotEnvObject).forEach(key => {
+            newEnv[key] = expressDotEnvObject[key];
+        });
         command = 'npm run start';
         let startResult = await execShellCommand(command, {
             cwd: newExpressPath,
