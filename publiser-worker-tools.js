@@ -395,12 +395,29 @@ let start = async (req, res) => {
 };
 
 function updateLongProcess(longProcessUrl, longProcessToken, longProcessId, status, state, metaData) {
-    // let config = {
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //         'Authorization': `Bearer ${longProcessToken}`
-    //     }
-    // };
+    let config = {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${longProcessToken}`
+        }
+    };
+
+    axios({
+        method: 'post',
+        url: longProcessUrl,
+        data: {
+            longProcessId,
+            status,
+            state,
+            metaData
+        },
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${longProcessToken}`
+        }
+    }).then(res => {}).catch(error => {
+        console.log("update long process error: ", error);
+    });
 
     // axios.post(longProcessUrl, {
     //     longProcessId,
@@ -411,25 +428,25 @@ function updateLongProcess(longProcessUrl, longProcessToken, longProcessId, stat
     //     console.log("update long process error: ", error);
     // })
 
-    let request = require("request");
-    let options = { method: 'POST',
-        url: longProcessUrl,
-        headers: 
-        { 'postman-token': '7db856b6-56df-bc99-e5da-3186c054c639',
-            'cache-control': 'no-cache',
-            authorization: `Bearer ${longProcessToken}` },
-        body: JSON.stringify({
-            longProcessId,
-            status,
-            state,
-            metaData
-    })};
+    // let request = require("request");
+    // let options = { method: 'POST',
+    //     url: longProcessUrl,
+    //     headers: 
+    //     { 'postman-token': '7db856b6-56df-bc99-e5da-3186c054c639',
+    //         'cache-control': 'no-cache',
+    //         authorization: `Bearer ${longProcessToken}` },
+    //     body: JSON.stringify({
+    //         longProcessId,
+    //         status,
+    //         state,
+    //         metaData
+    // })};
 
-    request(options, function (error, response, body) {
-        console.log('Update long process response: ', response, body)
-        if (error) 
-            console.log('Update long process error: ', error);
-    });
+    // request(options, function (error, response, body) {
+    //     console.log('Update long process response: ', response, body)
+    //     if (error) 
+    //         console.log('Update long process error: ', error);
+    // });
 };
 
 let update = async (req, res) => {
