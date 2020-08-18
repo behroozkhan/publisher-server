@@ -35,7 +35,7 @@ function execShellCommand(cmd, config) {
     });
 }
 
-function spawnAsync(cmd, args, options) {
+function spawnAsync(cmd, args, options, unref) {
     return new Promise((resolve, reject) => {
         const ls = spawn(cmd, args, options);
 
@@ -46,6 +46,9 @@ function spawnAsync(cmd, args, options) {
         ls.on("close", code => {
             resolve({success: true});
         });
+
+        if (unref)
+            ls.unref();
     });
 }
 
@@ -152,9 +155,9 @@ let start = async (req, res) => {
         command = 'npm';
         let startResult = await spawnAsync(command, ['run', 'start'], {
             cwd: newExpressPath,
-            slient:true,
             detached:true,
-        });
+            stdio: 'ignore'
+        }, true);
         
         if (!startResult.success) {
             console.log("Error: ",startResult.stdout, startResult.error);
