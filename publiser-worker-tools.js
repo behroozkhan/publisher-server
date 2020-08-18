@@ -417,7 +417,7 @@ function updateLongProcess(longProcessUrl, longProcessToken, longProcessId, stat
         headers: 
         { 'postman-token': '7db856b6-56df-bc99-e5da-3186c054c639',
             'cache-control': 'no-cache',
-            authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImxvbmdQcm9jZXNzVG9rZW4iLCJpYXQiOjE1OTc3NjU4MzV9.wuX_y-i4vuJ4hH2mCy9pswRSn5uMtjy5ny41cxAUTN4' },
+            authorization: `Bearer ${longProcessToken}` },
         body: JSON.stringify({
             longProcessId,
             status,
