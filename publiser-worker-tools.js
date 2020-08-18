@@ -2,7 +2,8 @@ const fsPromises = require('fs').promises;
 var Promise = require("bluebird");
 let ncpAsync = Promise.promisify(require('ncp').ncp);
 let crypto = require('crypto');
-let exec = require('child_process').exec;
+const exec = require('child_process').exec;
+const { spawn } = require("child_process");
 let execP = Promise.promisify(exec);
 const getPort = require('get-port');
 const dbTools = require('./dbTools.js');
@@ -30,6 +31,20 @@ function execShellCommand(cmd, config) {
         exec(cmd, config, (error, stdout, stderr) => {
             let success = !(error);
             resolve({success, stdout, stderr, error});
+        });
+    });
+}
+
+function spawnAsync(cmd, args, options) {
+    return new Promise((resolve, reject) => {
+        const ls = spawn(cmd, args, options);
+
+        ls.on('error', (error) => {
+            resolve({success: false, error: error});
+        });
+
+        ls.on("close", code => {
+            resolve({success: true});
         });
     });
 }
@@ -78,6 +93,22 @@ let start = async (req, res) => {
             fs.mkdirSync(path);
         }
         console.log("Starting publisher");
+        
+        /// Database Configs
+        console.log("Database Configs ...");
+        let initDbResult = await dbTools.initDB(dbName, {
+            user: process.env.POSTGRES_USER,
+            host: postgresHost,
+            database: 'WeblancerMain',
+            password: process.env.POSTGRES_PASSWORD,
+            port: 5432,
+        })
+
+        if (!initDbResult.success) {
+            console.log("Error: ", initDbResult.error);
+            throw new Error ('Database init failed !!!');
+        }
+        /// Database Configs
 
         /// Express Configs
         console.log("Express Configs ...");
@@ -118,7 +149,7 @@ let start = async (req, res) => {
         // TODO can change with forever and pm2
         console.log(`Express Configs npm run start port ${freePort} ...`);
         command = 'npm run start';
-        let startResult = await execShellCommand(command, {
+        let startResult = await spawnAsync(command, undefined, {
             cwd: newExpressPath
         });
         
@@ -129,7 +160,7 @@ let start = async (req, res) => {
         /// Express Configs
 
         /// Client Configs
-        console.log("Client configs ...");
+        console.log("Client Configs ...");
         await ncpAsync(clientPath, newClientProjectPath);
         await waitForMilis(1000);
 
@@ -154,7 +185,7 @@ let start = async (req, res) => {
             .replace(/{homepage}/g, `/publisher_${publisherId}/client`);
         await fsPromises.writeFile(clientPackagePath, data, 'utf8');
         
-        console.log("Client configs npm install ...");
+        console.log("Client Configs npm install ...");
         command = 'npm install';
         let installClientResult = await execShellCommand(command, {
             cwd: newClientProjectPath
@@ -165,7 +196,7 @@ let start = async (req, res) => {
             throw new Error ('Installing client failed !!!');
         }
 
-        console.log("Client configs npm run build ...");
+        console.log("Client Configs npm run build ...");
         command = 'npm run build';
         let buildResult = await execShellCommand(command, {
             cwd: newClientProjectPath
@@ -176,7 +207,7 @@ let start = async (req, res) => {
             throw new Error ('Building client failed !!!');
         }
 
-        console.log("Client configs copying builded files...");
+        console.log("Client Configs copying builded files...");
         await ncpAsync(clientGeneratedBuildPath, newClientBuildPath);
         await waitForMilis(1000);
         /// Client Configs
@@ -207,22 +238,6 @@ let start = async (req, res) => {
             console.log("No need to NginX Configs ...");
         }
         /// NginX Configs
-        
-        /// Database Configs
-            console.log("Database Configs ...");
-        let initDbResult = await dbTools.initDB(dbName, {
-            user: process.env.POSTGRES_USER,
-            host: postgresHost,
-            database: 'WeblancerMain',
-            password: process.env.POSTGRES_PASSWORD,
-            port: 5432,
-        })
-
-        if (!initDbResult.success) {
-            console.log("Error: ", initDbResult.error);
-            throw new Error ('Database init failed !!!');
-        }
-        /// Database Configs
 
         console.log("Finish, Publisher express and client configed successfully.");
         res.json(
