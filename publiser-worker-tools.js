@@ -156,7 +156,8 @@ let start = async (req, res) => {
         console.log("Express Configs npm install ...");
         let command = 'npm install';
         let installResult = await execShellCommand(command, {
-            cwd: newExpressPath
+            cwd: newExpressPath,
+            env: expressDotEnvObject
         });
         
         if (!installResult.success) {
