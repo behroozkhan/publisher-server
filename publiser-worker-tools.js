@@ -167,21 +167,22 @@ let start = async (req, res) => {
         }
 
         // TODO can change with forever and pm2
-        console.log(`Express Configs npm run start port ${freePort} ...`);
-        // command = 'npm';
-        // let startResult = await spawnAsync(command, ['run', 'start'], {
-            // cwd: newExpressPath,
-            // detached:true
-        // }, true)
         let newEnv = cloneDeep(process.env);
         Object.keys(expressDotEnvObject).forEach(key => {
             newEnv[key] = expressDotEnvObject[key];
         });
-        command = 'npm run start';
-        let startResult = await execShellCommand(command, {
+        console.log(`Express Configs npm run start port ${freePort} ...`);
+        command = 'npm';
+        let startResult = await spawnAsync(command, ['run', 'start'], {
             cwd: newExpressPath,
+            detached:true,
             env: newEnv
-        });
+        }, true)
+        // command = 'npm run start';
+        // let startResult = await execShellCommand(command, {
+        //     cwd: newExpressPath,
+        //     env: newEnv
+        // });
         
         console.log("startResult: ",startResult);
         if (!startResult.success) {
