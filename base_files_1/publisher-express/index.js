@@ -6,9 +6,6 @@ let Response = require('./utils/response.js');
 let express = require('express');
 let app = express();
 let appBaseRoute = '/api';
-if (process.env.HAS_CUSTOM_DOMAIN) {
-    appBaseRoute += `/${process.env.PORT}`
-}
 
 app.use(express.json());
 app.use(unlessRoute([

@@ -61,10 +61,6 @@ function spawnAsync(cmd, args, options, unref) {
         });
 
         ls.on('error', (error) => {
-            console.log("Spawn Result: ", false, {
-                stdout: out,
-                stderr: err
-            });
             resolved = true;
             resolve({
                 success: false,
@@ -75,10 +71,6 @@ function spawnAsync(cmd, args, options, unref) {
         });
 
         ls.on("close", code => {
-            console.log("Spawn Result: ", true, {
-                stdout: out,
-                stderr: err
-            });
             resolved = true;
             resolve({
                 success: true,
@@ -187,6 +179,13 @@ let start = async (req, res) => {
         /// Database Configs
 
         /// Express Configs
+
+        // killing old express port
+        if (expressPort) {
+            command = `fuser -k ${expressPort}/tcp`;
+            await execShellCommand(command);
+        }
+
         console.log("Express Configs ...");
         updateLongProcess(longProcessUrl, longProcessToken,
             longProcessId, 'Express Configs ...', 'running', {
@@ -230,12 +229,6 @@ let start = async (req, res) => {
                     error: installResult.error
                 });
             throw new Error('Installing Express failed !!!');
-        }
-
-        // killing old express port
-        if (expressPort) {
-            command = `fuser -k ${expressPort}/tcp`;
-            await execShellCommand(command);
         }
 
         let newEnv = cloneDeep(process.env);
