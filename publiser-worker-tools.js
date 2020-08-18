@@ -398,7 +398,7 @@ function updateLongProcess(longProcessUrl, longProcessToken, longProcessId, stat
     let config = {
         headers: {
             'Content-Type': 'application/json;charset=UTF-8',
-            // 'Authorization': `Bearer ${longProcessToken}`
+            'Authorization': `Bearer ${longProcessToken}`
         }
     };
 
