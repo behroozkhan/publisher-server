@@ -426,6 +426,7 @@ function updateLongProcess(longProcessUrl, longProcessToken, longProcessId, stat
     })};
 
     request(options, function (error, response, body) {
+        console.log('Update long process response: ', response, body)
         if (error) 
             console.log('Update long process error: ', error);
     });
