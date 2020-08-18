@@ -93,7 +93,7 @@ let start = async (req, res) => {
             fs.mkdirSync(path);
         }
         console.log("Starting publisher");
-        
+
         let dbName = `${
             publisherBrandName? publisherBrandName + '_': ''
         }PublisherDB_${publisherId}`;
@@ -150,7 +150,7 @@ let start = async (req, res) => {
         // TODO can change with forever and pm2
         console.log(`Express Configs npm run start port ${freePort} ...`);
         command = 'npm run start';
-        let startResult = await spawnAsync(command, undefined, {
+        let startResult = await spawnAsync(command, [], {
             cwd: newExpressPath
         });
         
