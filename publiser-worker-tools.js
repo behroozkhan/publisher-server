@@ -10,6 +10,7 @@ const dbTools = require('./dbTools.js');
 let Response = require('./utils/response.js');
 var fs = require("fs");
 let dotenv = require('dotenv');
+const cloneDeep = require('clone-deep');
 
 function existsAsync(path) {
   return new Promise(function(resolve, reject){
@@ -172,10 +173,12 @@ let start = async (req, res) => {
             // cwd: newExpressPath,
             // detached:true
         // }, true)
+        let newEnv = cloneDeep(process.env);
+        newEnv.TEST= "BEHROOz"
         command = 'npm run start';
         let startResult = await execShellCommand(command, {
             cwd: newExpressPath,
-            env: {TEST: "Behrooz"}
+            env: newEnv
         });
         
         console.log("startResult: ",startResult);
