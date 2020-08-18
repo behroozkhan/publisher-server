@@ -149,9 +149,11 @@ let start = async (req, res) => {
 
         // TODO can change with forever and pm2
         console.log(`Express Configs npm run start port ${freePort} ...`);
-        command = 'npm run start';
-        let startResult = await spawnAsync(command, [], {
-            cwd: newExpressPath
+        command = 'npm';
+        let startResult = await spawnAsync(command, ['run', 'start'], {
+            cwd: newExpressPath,
+            slient:true,
+            detached:true,
         });
         
         if (!startResult.success) {
