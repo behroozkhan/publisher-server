@@ -11,6 +11,7 @@ let Response = require('./utils/response.js');
 var fs = require("fs");
 let dotenv = require('dotenv');
 const cloneDeep = require('clone-deep');
+let axios = require('axios');
 
 function existsAsync(path) {
   return new Promise(function(resolve, reject){
