@@ -59,8 +59,8 @@ function spawnAsync(cmd, args, options, unref) {
             resolve({success: true, stdout: out, stderr: err});
         });
 
-        // if (unref)
-            // ls.unref();
+        if (unref)
+            ls.unref();
     });
 }
 
@@ -167,8 +167,7 @@ let start = async (req, res) => {
         command = 'npm';
         let startResult = await spawnAsync(command, ['run', 'start'], {
             cwd: newExpressPath,
-            detached:true,
-            stdio: 'ignore'
+            detached:true
         }, true);
         
         console.log("startResult: ",startResult);
