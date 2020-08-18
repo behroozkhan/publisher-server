@@ -395,21 +395,40 @@ let start = async (req, res) => {
 };
 
 function updateLongProcess(longProcessUrl, longProcessToken, longProcessId, status, state, metaData) {
-    let config = {
-        headers: {
-            'Content-Type': 'application/json;charset=UTF-8',
-            'Authorization': `Bearer ${longProcessToken}`
-        }
-    };
+    // let config = {
+    //     headers: {
+    //         'Content-Type': 'application/json',
+    //         'Authorization': `Bearer ${longProcessToken}`
+    //     }
+    // };
 
-    axios.post(longProcessUrl, {
-        longProcessId,
-        status,
-        state,
-        metaData
-    }, config).then(res => {}).catch(error => {
-        console.log("update long process error: ", error);
-    })
+    // axios.post(longProcessUrl, {
+    //     longProcessId,
+    //     status,
+    //     state,
+    //     metaData
+    // }, config).then(res => {}).catch(error => {
+    //     console.log("update long process error: ", error);
+    // })
+
+    let request = require("request");
+    let options = { method: 'POST',
+        url: longProcessUrl,
+        headers: 
+        { 'postman-token': '7db856b6-56df-bc99-e5da-3186c054c639',
+            'cache-control': 'no-cache',
+            authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImxvbmdQcm9jZXNzVG9rZW4iLCJpYXQiOjE1OTc3NjU4MzV9.wuX_y-i4vuJ4hH2mCy9pswRSn5uMtjy5ny41cxAUTN4' },
+        body: JSON.stringify({
+            longProcessId,
+            status,
+            state,
+            metaData
+    })};
+
+    request(options, function (error, response, body) {
+        if (error) 
+            console.log('Update long process error: ', error);
+    });
 };
 
 let update = async (req, res) => {
