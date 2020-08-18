@@ -16,7 +16,14 @@ class AuthManager {
 
     authenticate = (username, password, cb) => {
         let inputs = {username, password};
-        axios.post(`${this.baseUrl}/user/login`, inputs)
+
+        let config = {
+            headers: {
+                'pport': config.pport
+            }
+        }
+
+        axios.post(`${this.baseUrl}/user/login`, inputs, config)
             .then(res => {
                 console.log(res.data);
                 if (res.data.success) {

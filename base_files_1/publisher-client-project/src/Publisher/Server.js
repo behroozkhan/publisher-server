@@ -10,7 +10,8 @@ class ServerManager {
     getOptions = () => {
         return {
             headers: {
-                'Authorization': Auth.getAuthorization()
+                'Authorization': Auth.getAuthorization(),
+                'pport': config.pport
             }
         }
     };

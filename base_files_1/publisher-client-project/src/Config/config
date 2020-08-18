@@ -2,5 +2,6 @@
   "AuthUrl": "{AuthUrl}",
   "ServerUrl": "{ServerUrl}",
   "BrandName": "{BrandName}",
-  "BaseName": "{BaseName}"
+  "BaseName": "{BaseName}",
+  "pport": "{ExpressPort}"
 }

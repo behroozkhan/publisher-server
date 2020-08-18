@@ -278,7 +278,8 @@ let start = async (req, res) => {
             .replace(/{AuthUrl}/g, baseApiUrl)
             .replace(/{ServerUrl}/g, baseApiUrl)
             .replace(/{BaseName}/g, `publisher_${publisherId}/client`)
-            .replace(/{BrandName}/g, publisherBrandName);
+            .replace(/{BrandName}/g, publisherBrandName)
+            .replace(/{ExpressPort}/g, freePort);
 
         clientConfigPath += '.json';
         await fsPromises.writeFile(clientConfigPath, data, 'utf8');
