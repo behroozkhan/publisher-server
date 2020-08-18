@@ -83,7 +83,7 @@ let start = async (req, res) => {
     // TODO 5. set nginx to handle apis from /api/... to publisher express app 
 
     let {publisherId, publisherDomains, sudoPassword, postgresHost,
-        hasPrivateDomain, publisherBrandName, publisherVersion} = req.body;
+        hasPrivateDomain, publisherBrandName, publisherVersion, expressPort} = req.body;
 
     let baseFilePath = `/base_files_${publisherVersion}`;
     
@@ -174,25 +174,26 @@ let start = async (req, res) => {
             throw new Error ('Installing failed !!!');
         }
 
-        // TODO can change with forever and pm2
+        // killing old express port
+        if (expressPort) {
+            command = `fuser -k ${expressPort}/tcp`;
+            await execShellCommand(command);
+        }
+
         let newEnv = cloneDeep(process.env);
         Object.keys(expressDotEnvObject).forEach(key => {
             newEnv[key] = expressDotEnvObject[key];
         });
+
         console.log(`Express Configs npm run start port ${freePort} ...`);
+        // TODO can change with forever or pm2
         command = 'npm';
         let startResult = await spawnAsync(command, ['run', 'start'], {
             cwd: newExpressPath,
             detached:true,
             env: newEnv
-        }, true)
-        // command = 'npm run start';
-        // let startResult = await execShellCommand(command, {
-        //     cwd: newExpressPath,
-        //     env: newEnv
-        // });
+        }, true);
         
-        console.log("startResult: ",startResult);
         if (!startResult.success) {
             console.log("Error: ",startResult.stdout, startResult.error);
             throw new Error ('Running failed !!!');
