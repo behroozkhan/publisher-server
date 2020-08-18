@@ -41,13 +41,13 @@ function spawnAsync(cmd, args, options, unref) {
 
         let out = "";
         let err = "";
-        ls.stdout.on('data', (data) => {
-            out += data;
-        });
+        // ls.stdout.on('data', (data) => {
+        //     out += data;
+        // });
           
-        ls.stderr.on('data', (data) => {
-            err += data;
-        });
+        // ls.stderr.on('data', (data) => {
+        //     err += data;
+        // });
 
         ls.on('error', (error) => {
             console.log("Spawn Result: ", false, {stdout: out, stderr: err})
