@@ -174,7 +174,8 @@ let start = async (req, res) => {
         // }, true)
         command = 'npm run start';
         let startResult = await execShellCommand(command, {
-            cwd: newExpressPath
+            cwd: newExpressPath,
+            env: {TEST: "Behrooz"}
         });
         
         console.log("startResult: ",startResult);
