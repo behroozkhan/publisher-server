@@ -206,8 +206,8 @@ let start = async (req, res) => {
 
         data = await fsPromises.readFile(clientConfigPath, 'utf8');
         let baseApiUrl = `${
-            !hasPrivateDomain ? 'publisherapi.' + process.env.PUBLISHER_DOMAIN + 
-            '/api/' + freePort:
+            !hasPrivateDomain ? 'publisher.' + process.env.PUBLISHER_DOMAIN + 
+            '/api':
             publisherDomains[0].root + '/api'
         }`;
 
