@@ -397,7 +397,7 @@ let start = async (req, res) => {
 function updateLongProcess(longProcessUrl, longProcessToken, longProcessId, status, state, metaData) {
     let config = {
         headers: {
-            'Content-Type': 'application/json',
+            // 'Content-Type': 'application/json',
             'Authorization': `Bearer ${longProcessToken}`
         }
     };
