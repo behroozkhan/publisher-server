@@ -41,6 +41,7 @@ function spawnAsync(cmd, args, options, unref) {
     return new Promise((resolve, reject) => {
         const ls = spawn(cmd, args, options);
 
+        let resolved = false;
         let out = "";
         let err = "";
         ls.stdout.on('data', (data) => {
@@ -52,14 +53,21 @@ function spawnAsync(cmd, args, options, unref) {
         });
 
         ls.on('error', (error) => {
-            console.log("Spawn Result: ", false, {stdout: out, stderr: err})
+            console.log("Spawn Result: ", false, {stdout: out, stderr: err});
+            resolved = true;
             resolve({success: false, stdout: out, stderr: err, error: error});
         });
 
         ls.on("close", code => {
-            console.log("Spawn Result: ", true, {stdout: out, stderr: err})
+            console.log("Spawn Result: ", true, {stdout: out, stderr: err});
+            resolved = true;
             resolve({success: true, stdout: out, stderr: err});
         });
+
+        setTimeout(() => {
+            if (!resolved)
+                resolve({success: true, stdout: out, stderr: err});
+        }, 4000);
 
         if (unref)
             ls.unref();
