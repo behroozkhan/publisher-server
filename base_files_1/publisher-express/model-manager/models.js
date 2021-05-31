@@ -1,4 +1,6 @@
 let Sequelize = require('sequelize');
+let Response = require('../utils/response');
+
 const User = require('../models/user');
 const Plan = require('../models/plan');
 const Website = require('../models/website');

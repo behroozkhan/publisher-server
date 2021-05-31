@@ -252,21 +252,21 @@ router.post('/login',async function (req, res) {
     // check userName and password sent by user and authenticate him
     let user;
     try {
-        user = await models.User.find({
+        user = await models.User.findOne({
             where: {
                 username: req.body.username,
                 password: req.body.password,
             },
             attributes: ['id', 'role']
         });
-    } catch {
+    } catch (e) {
         res.status(401).json(
-            new Response(false, {}, "Username or password is wrong").json()
+            new Response(false, {}, "Username or password is wrong. " + e.message).json()
         );
         return;
     }
 
-    const accessToken = jwt.sign(user, process.env.JWT_ACCESS_TOKEN_SECRET);
+    const accessToken = jwt.sign(user.toJson(), process.env.JWT_ACCESS_TOKEN_SECRET);
     res.json(
         new Response(true, {accessToken: accessToken}).json()
     );

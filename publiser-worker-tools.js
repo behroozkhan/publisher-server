@@ -97,6 +97,7 @@ let start = async (req, res) => {
     let {
         publisherId,
         publisherUserName,
+        publisherPassword,
         publisherDomains,
         sudoPassword,
         postgresHost,
@@ -206,6 +207,8 @@ let start = async (req, res) => {
             .replace(/{jwt_access_token_secret}/g, crypto.randomBytes(64).toString('hex'))
             .replace(/{port}/g, freePort)
             .replace(/{postgres_host}/g, postgresHost || "localhost")
+            .replace(/{publisherPassword}/g, publisherPassword)
+            .replace(/{publisherId}/g, publisherId)
             .replace(/{hasCustomDomain}/g, hasPrivateDomain);
 
         let expressDotEnvObject = dotenv.parse(data);
