@@ -123,7 +123,7 @@ let start = async (req, res) => {
     let clientPath = __dirname + baseFilePath + process.env.SOURCE_PUBLISHER_CLIENT;
     let nginxConfPath = __dirname + baseFilePath + process.env.SOURCE_NGINX_CONF;
     let basePath = process.env.PUBLISHER_EXPRESS_APP_BASE_PATH;
-    let path = `${basePath}/publisher_${publisherUserName}`;
+    let path = `${basePath}/${publisherUserName}`;
 
     let newExpressPath = `${path}/publisher-express`;
     let newClientProjectPath = `${path}/publisher-client-project`;
@@ -163,7 +163,7 @@ let start = async (req, res) => {
             });
         let initDbResult = await dbTools.initDB(dbName, {
             user: process.env.POSTGRES_USER,
-            host: postgresHost,
+            host: postgresHost || "localhost",
             database: 'WeblancerMain',
             password: process.env.POSTGRES_PASSWORD,
             port: 5432,
@@ -205,7 +205,7 @@ let start = async (req, res) => {
             .replace(/{postgres_password}/g, process.env.POSTGRES_PASSWORD)
             .replace(/{jwt_access_token_secret}/g, crypto.randomBytes(64).toString('hex'))
             .replace(/{port}/g, freePort)
-            .replace(/{postgres_host}/g, postgresHost)
+            .replace(/{postgres_host}/g, postgresHost || "localhost")
             .replace(/{hasCustomDomain}/g, hasPrivateDomain);
 
         let expressDotEnvObject = dotenv.parse(data);
@@ -276,7 +276,7 @@ let start = async (req, res) => {
         }`;
 
         data = data
-            .replace(/{BaseName}/g, `publisher_${publisherUserName}/client`)
+            .replace(/{BaseName}/g, `${publisherUserName}/client`)
             .replace(/{BrandName}/g, publisherBrandName)
             .replace(/{ExpressPort}/g, freePort);
 
@@ -285,7 +285,7 @@ let start = async (req, res) => {
 
         data = await fsPromises.readFile(clientPackagePath, 'utf8');
         data = data
-            .replace(/{homepage}/g, `/publisher_${publisherUserName}/client`);
+            .replace(/{homepage}/g, `/${publisherUserName}/client`);
         await fsPromises.writeFile(clientPackagePath, data, 'utf8');
 
         console.log("Client Configs npm install ...");
@@ -345,7 +345,7 @@ let start = async (req, res) => {
             data = await fsPromises.readFile(nginxConfPath, 'utf8');
             publisherDomains.forEach(async domainData => {
                 data = data
-                    .replace(/{publisherPath}/g, `publisher_${publisherUserName}`)
+                    .replace(/{publisherPath}/g, `${publisherUserName}`)
                     .replace(/{serverName}/g, `${domainData.root} ${domainData.subs.join(' ')}`)
                     .replace(/{apiPort}/g, freePort);
 
