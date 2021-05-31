@@ -108,7 +108,7 @@ let start = async (req, res) => {
         longProcessToken
     } = req.body;
 
-    let baseFilePath = `/base_files_${publisherVersion}`;
+    let baseFilePath = `/base_files_${publisherVersion || 1}`;
 
     console.log("path: ", __dirname + baseFilePath)
     if (!await existsAsync(__dirname + baseFilePath)) {
@@ -409,35 +409,6 @@ function updateLongProcess(longProcessUrl, longProcessToken, longProcessId, stat
     }).then(res => {}).catch(error => {
         console.log("update long process error: ", error);
     });
-
-    // axios.post(longProcessUrl, {
-    //     longProcessId,
-    //     status,
-    //     state,
-    //     metaData
-    // }, config).then(res => {}).catch(error => {
-    //     console.log("update long process error: ", error);
-    // })
-
-    // let request = require("request");
-    // let options = { method: 'POST',
-    //     url: longProcessUrl,
-    //     headers: 
-    //     { 'postman-token': '7db856b6-56df-bc99-e5da-3186c054c639',
-    //         'cache-control': 'no-cache',
-    //         authorization: `Bearer ${longProcessToken}` },
-    //     body: JSON.stringify({
-    //         longProcessId,
-    //         status,
-    //         state,
-    //         metaData
-    // })};
-
-    // request(options, function (error, response, body) {
-    //     console.log('Update long process response: ', response, body)
-    //     if (error) 
-    //         console.log('Update long process error: ', error);
-    // });
 };
 
 let update = async (req, res) => {

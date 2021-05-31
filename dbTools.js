@@ -1,7 +1,7 @@
 const { Pool } = require('pg');
 const pgtools = require('pgtools');
 
-module.exports.initDB = (dbName, config, callback) => {
+module.exports.initDB = (dbName, config) => {
     return new Promise((resolve, reject) => {
         const pool = new Pool({...config});
 
