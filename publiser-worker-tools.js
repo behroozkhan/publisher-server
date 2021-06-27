@@ -186,8 +186,8 @@ let start = async (req, res) => {
         if (expressPort) {
             // await execShellCommand(`fuser -k ${expressPort}/tcp`);
             // Kill pm2 process
-            console.log("Kill pm2 ", publisherBrandName, "Publisher");
-            await execShellCommand(`pm2 kill "${publisherBrandName} Publisher"`);
+            console.log("delete pm2 ", publisherBrandName, "Publisher");
+            await execShellCommand(`pm2 delete "${publisherBrandName} Publisher"`);
         }
 
         console.log("Express Configs ...");
