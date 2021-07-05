@@ -186,7 +186,7 @@ let start = async (req, res) => {
         if (expressPort) {
             // await execShellCommand(`fuser -k ${expressPort}/tcp`);
             // Kill pm2 process
-            console.log("delete pm2 ", publisherBrandName, "Publisher");
+            console.log("delete from pm2", publisherBrandName, "Publisher");
             await execShellCommand(`pm2 delete "${publisherBrandName} Publisher"`);
         }
 
@@ -195,7 +195,10 @@ let start = async (req, res) => {
             longProcessId, 'Express Configs ...', 'running', {
                 progress: 8
             });
-        await ncpAsync(expressPath, newExpressPath);
+
+            
+        // await ncpAsync(expressPath, newExpressPath);
+        await execShellCommand(`cp -r ${expressPath} ${newExpressPath}`);
         await waitForMilis(1000);
 
         let freePort = await getPort({
