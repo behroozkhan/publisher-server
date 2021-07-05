@@ -274,7 +274,8 @@ let start = async (req, res) => {
             longProcessId, 'Client Configs ...', 'running', {
                 progress: 40
             });
-        await ncpAsync(clientPath, newClientProjectPath);
+        // await ncpAsync(clientPath, newClientProjectPath);
+        await execShellCommand(`cp -r ${clientPath}/* ${newClientProjectPath}`);
         await waitForMilis(1000);
 
         data = await fsPromises.readFile(clientConfigPath, 'utf8');
@@ -340,7 +341,8 @@ let start = async (req, res) => {
             longProcessId, 'Client Configs copying builded files...', 'running', {
                 progress: 90
             });
-        await ncpAsync(clientGeneratedBuildPath, newClientBuildPath);
+        // await ncpAsync(clientGeneratedBuildPath, newClientBuildPath);
+        await execShellCommand(`cp -r ${clientGeneratedBuildPath}/* ${newClientBuildPath}`);
         await waitForMilis(1000);
         /// Client Configs
 
