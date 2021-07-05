@@ -198,7 +198,7 @@ let start = async (req, res) => {
 
             
         // await ncpAsync(expressPath, newExpressPath);
-        await execShellCommand(`cp -r ${expressPath} ${newExpressPath}`);
+        await execShellCommand(`cp -r ${expressPath}/* ${newExpressPath}`);
         await waitForMilis(1000);
 
         let freePort = await getPort({
